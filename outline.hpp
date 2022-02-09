@@ -16,7 +16,7 @@ class Task {  // redundant?
 
 class HttpResponse {
 public:
-	handle();
+	
 };
 
 class GetResponse : public HttpResponse {
@@ -31,10 +31,9 @@ class ConnnectResponse : public HttpResponse {
 
 };
 class HttpRequest {
-	static int GET, POST, CONNECT;
-
 public:
-	HttpResponse handle();
+	static int GET, POST, CONNECT;
+	tuple<HttpResponse, optional<Socket>> handle() = 0;
 };
 
 class GetRequest : public HttpRequest {
@@ -54,7 +53,7 @@ private:
 	int fd;
 public:
 	HttpRequest read();
-	Socket write(HttpResponse response);
+	void write(HttpResponse response);
 	int getFileDescriptor();
 	int close();
 
@@ -123,14 +122,24 @@ void thread_func() {
 	while (1) {
 		Socket client_proxy_socket = socket_pool.pop();
 		HttpRequest request = client_proxy_socket.read();
-		HttpResponse response = request.handle();
-		Socket proxy_server_socket = client_proxy_socket.write(response);
+		HttpResponse response;
+		optional<Socket> optional_socket;
+		tie(response, optional_socket) = request.handle();
+		client_proxy_socket.write(response);
+
+		// OPTION 1
 		if (request.type == HttpResponse::CONNECT) {
 			BlindForwarder forwarder(client_proxy_socket, proxy_server_socket);
 			forwarder.forward();
 		}
+		// OPTION 2
+		if (optional_socket.hasValue()) {
+			Socket proxy_server_socket = optional_socket.value();
+			BlindForwarder forwarder(client_proxy_socket, proxy_server_socket);
+			forwarder.forward();
+			proxy_server_socket.close();
+		}
 		client_proxy_socket.close();
-		proxy_server_socket.close();
     }
 }
 
