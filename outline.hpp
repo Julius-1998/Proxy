@@ -19,33 +19,25 @@ public:
 	
 };
 
-class GetResponse : public HttpResponse {
-
-};
-
-class PostResponse : public HttpResponse {
-
-};
-
-class ConnnectResponse : public HttpResponse {
-
-};
 class HttpRequest {
 public:
 	static int GET, POST, CONNECT;
-	tuple<HttpResponse, optional<Socket>> handle() = 0;
+	virtual tuple<HttpResponse, optional<Socket>> handle() = 0;
 };
 
 class GetRequest : public HttpRequest {
-
+	@Override
+	virtual tuple<HttpResponse, optional<Socket>> handle() = 0;
 };
 
 class PostRequest : public HttpRequest {
-
+	@Override
+	virtual tuple<HttpResponse, optional<Socket>> handle() = 0;
 };
 
 class ConnnectRequest : public HttpRequest {
-
+	@Override
+	virtual tuple<HttpResponse, optional<Socket>> handle() = 0;
 };
 
 class Socket {
