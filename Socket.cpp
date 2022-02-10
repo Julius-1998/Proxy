@@ -3,9 +3,18 @@
 #include <optional>
 class Socket {
 private:
-	int fd;
+	int fd = -1;
 public:
 	Socket(int fd) : fd(fd) {}
+
+	Socket(Socket&& that) {
+		this->fd = that->fd;
+		that->fd = -1;
+	}
+
+	Socket(Socket that) = delete;
+	Socket(Socket& that) = delete;
+	Socket(const Socket& that) = delete;
 
 	HttpRequest recvRequest() {
 
@@ -28,7 +37,8 @@ public:
 	}
 	
 	~Socket() {
-		close(fd);
+		if (fd >= 0)
+			close(fd);
 	}
 
 };
