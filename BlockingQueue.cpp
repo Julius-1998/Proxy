@@ -17,6 +17,7 @@ public:
 			cv.wait(lock);
 		}
 		q.push(obj);
+		lock.unlock();
 		cv.notify_all();
 	}
 
@@ -27,6 +28,7 @@ public:
 		}
 		T ret = q.top();
 		q.pop();
+		lock.unlock();
 		cv.notify_one();
 		return ret;
 	}
