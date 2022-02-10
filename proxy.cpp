@@ -5,7 +5,7 @@ int main(int argc, char const *argv[]) {
 	ThreadPool thread_pool(16);
 	thread_pool.execute(thread_func);
 	while (1) {
-        socket_queue.push(std::move(socket_buidler.acceptTCPConnection()));
+        socket_queue.push(std::move(socket_buidler.acceptTCPConnection()));  // NOTE: move can be omited
 	}
 	return 0;
 }
@@ -14,9 +14,9 @@ int main(int argc, char const *argv[]) {
 
 void thread_func() {
 	while (1) {
-		Socket client_proxy_socket = std::move(socket_queue.pop());
+		Socket client_proxy_socket = std::move(socket_queue.pop());  // NOTE: move can be omited
 		HttpRequest request = client_proxy_socket.recvRequest();
-		Socket proxy_server_socket = std::move(socket_buidler.openTCPConnection(request.getHost(), request.getPort()));
+		Socket proxy_server_socket = std::move(socket_buidler.openTCPConnection(request.getHost(), request.getPort()));  // NOTE: move can be omited
 		Task task(std::move(client_proxy_socket), std::move(proxy_server_socket), request);
 		Task.execute();
 	}
