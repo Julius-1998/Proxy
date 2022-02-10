@@ -15,9 +15,9 @@ public:
 		listenfd = fd;
 	}
 
-	SocketBuilder(std::string port) : SocketBuilder(port.c_str()) {}
+	SocketBuilder(const std::string& port) : SocketBuilder(port.c_str()) {}
 
-	static Socket openTCPConnection(std::string host, std::string port) {
+	static Socket openTCPConnection(const std::string& host, const std::string& port) {
 		int fd = open_clientfd(host.c_str(), port.c_str());
 		if (fd == -1) {
 			// TODO

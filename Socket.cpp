@@ -7,10 +7,19 @@ private:
 public:
 	Socket(int fd) : fd(fd) {}
 
-	HttpRequest read() {
+	HttpRequest recvRequest() {
 
 	}
-	void write(HttpResponse response) {
+
+	HttpResponse recvResponse() {
+
+	}
+
+	void sendRequest(const HttpRequest& request) {
+
+	}
+
+	void sendResponse(const HttpResponse& response) {
 
 	}
 
