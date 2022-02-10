@@ -15,10 +15,12 @@ public:
 		listenfd = fd;
 	}
 
+	SocketBuilder(const char* port) : SocketBuilder(const_cast<char*>(port)) {}
+
 	SocketBuilder(const std::string& port) : SocketBuilder(port.c_str()) {}
 
 	static Socket openTCPConnection(const std::string& host, const std::string& port) {
-		int fd = open_clientfd(host.c_str(), port.c_str());
+		int fd = open_clientfd(const_cast<char*>(host.c_str()), const_cast<char*>(port.c_str()));
 		if (fd == -1) {
 			// TODO
 		}
