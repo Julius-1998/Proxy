@@ -11,7 +11,7 @@ private:
 public:
 	BlockingQueue(size_t capacity) : q(), capacity(capacity), cv(), mutex() {}
 
-	void push(T obj) {
+	void push(T&& obj) {
 		std::unique_lock<std::mutex> lock(mutex);
 		while (q.size() == capacity) {
 			cv.wait(lock);
@@ -26,7 +26,7 @@ public:
 		while (q.empty()) {
 			cv.wait(lock);
 		}
-		T ret = q.top();
+		T ret = std::move(q.front());
 		q.pop();
 		lock.unlock();
 		cv.notify_one();
