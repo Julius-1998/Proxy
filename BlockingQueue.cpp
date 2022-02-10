@@ -16,7 +16,7 @@ public:
 		while (q.size() == capacity) {
 			cv.wait(lock);
 		}
-		q.push(obj);
+		q.push(std::move(obj));
 		lock.unlock();
 		cv.notify_all();
 	}
