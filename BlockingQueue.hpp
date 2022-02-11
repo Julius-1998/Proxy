@@ -1,6 +1,11 @@
+#ifndef __BLOCKINGQUEUE_HPP__
+#define __BLOCKINGQUEUE_HPP__
+
 #include <queue>
 #include <condition_variable>
 #include <mutex>
+#include <utility>
+
 template <typename T>
 class BlockingQueue {
 private:
@@ -33,3 +38,5 @@ public:
 		return ret;
 	}
 };
+
+#endif

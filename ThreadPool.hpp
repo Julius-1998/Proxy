@@ -1,8 +1,10 @@
+#ifndef __THREADPOOL_HPP__
+#define __THREADPOOL_HPP__
+
 #include <thread>
-#include <function>
 
 
-ThreadPool thread_pool {
+class ThreadPool {
 private:
 	int numOfThreads;
 public:
@@ -11,6 +13,8 @@ public:
 	template<typename Fn, typename... Args>
 	void execute(Fn&& fn, Args&&... args) {
 		for (int i = 0; i < numOfThreads; ++i)
-			std::thread(fn, args).detach();
+			std::thread(fn, args...).detach();
 	}
 };
+
+#endif

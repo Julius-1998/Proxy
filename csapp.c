@@ -42,7 +42,7 @@ void posix_error(int code, char *msg) /* Posix-style error */
     exit(0);
 }
 
-void gai_error(int code, char *msg) /* Getaddrinfo-style error */
+static void gai_error(int code, char *msg) /* Getaddrinfo-style error */
 {
     fprintf(stderr, "%s: %s\n", msg, gai_strerror(code));
     exit(0);
@@ -545,7 +545,7 @@ void Fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream)
  * Sockets interface wrappers
  ****************************/
 
-int Socket(int domain, int type, int protocol) 
+int SSocket(int domain, int type, int protocol) 
 {
     int rc;
 
@@ -1016,9 +1016,16 @@ int open_listenfd(char *port)
             continue;  /* Socket failed, try the next */
 
         /* Eliminates "Address already in use" error from bind */
-        setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR,    //line:netp:csapp:setsockopt
-                   (const void *)&optval , sizeof(int));
-
+        setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR, (const void *)&optval , sizeof(int));
+        /*
+setsockopt(
+      listenfd,     // Socket descriptor
+      SOL_SOCKET, // To manipulate options at the sockets API level
+      SO|SO_RCVTIMEO,// Specify the receiving or sending timeouts 
+      (const void *)&optval, // option values
+      sizeof(int) 
+  ); 
+  */
         /* Bind the descriptor to the address */
         if (bind(listenfd, p->ai_addr, p->ai_addrlen) == 0)
             break; /* Success */

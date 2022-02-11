@@ -1,19 +1,19 @@
 CC = g++
-CFLAGS = -std=c++11 -Wall
+CFLAGS = -std=c++11 -Wall 
 
 all: proxy
 
-csapp.o: csapp.c csapp.h
+csapp.o: csapp.c
 	gcc -Wall -c csapp.c
 
-BlockingQueue.o: BlockingQueue.cpp
-	$(CC) $(CFLAGS) -c BlockingQueue.cpp
+#proxy.o: proxy.cpp Socket.hpp SocketBuilder.hpp Task.hpp ThreadPool.hpp HttpRequest.hpp HttpResponse.hpp BlockingQueue.hpp BlindForwarder.hpp
+#	$(CC) $(CFLAGS) -c proxy.cpp Socket.hpp SocketBuilder.hpp Task.hpp ThreadPool.hpp HttpRequest.hpp HttpResponse.hpp BlockingQueue.hpp BlindForwarder.hpp
 
-proxy.o: proxy.c csapp.h
-	$(CC) $(CFLAGS) -c proxy.c
+proxy.o: proxy.cpp
+	$(CC) $(CFLAGS) -c proxy.cpp
 
-proxy: proxy.o socks.o csapp.o
-	$(CC) $(CFLAGS) proxy.o socks.o csapp.o -o proxy $(LDFLAGS)
+proxy: proxy.o csapp.o
+	$(CC) $(CFLAGS) proxy.o csapp.o -o proxy -lpthread
 
 clean:
-	rm -f *~ *.o proxy
+	rm -f *.gch *.o proxy

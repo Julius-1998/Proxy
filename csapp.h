@@ -64,7 +64,6 @@ extern char **environ; /* Defined by libc */
 void unix_error(char *msg);
 void posix_error(int code, char *msg);
 void dns_error(char *msg);
-void gai_error(int code, char *msg);
 void app_error(char *msg);
 
 /* Process control wrappers */
@@ -137,7 +136,7 @@ void *Calloc(size_t nmemb, size_t size);
 void Free(void *ptr);
 
 /* Sockets interface wrappers */
-int Socket(int domain, int type, int protocol);
+int SSocket(int domain, int type, int protocol);
 void Setsockopt(int s, int level, int optname, const void *optval, int optlen);
 void Bind(int sockfd, struct sockaddr *my_addr, int addrlen);
 void Listen(int s, int backlog);

@@ -1,4 +1,6 @@
-#include "csapp.h"
+#ifndef __SOCKETBUILDER_HPP__
+#define __SOCKETBUILDER_HPP__
+
 #include <string>
 
 class SocketBuilder {
@@ -19,14 +21,14 @@ public:
 
 	SocketBuilder(const std::string& port) : SocketBuilder(port.c_str()) {}
 
-	static Socket openTCPConnection(const std::string& host, const std::string& port) {
+	Socket openTCPConnection(const std::string& host, const std::string& port) {
 		int fd = open_clientfd(const_cast<char*>(host.c_str()), const_cast<char*>(port.c_str()));
 		if (fd == -1) {
 			// TODO
 		}
 		return Socket(fd);
 	}
-	static Socket acceptTCPConnection() {
+	Socket acceptTCPConnection() {
 		int connfd = accept(listenfd, (SA*)&clientaddr, &clientlen);
 		if (connfd == -1) {
 			// TODO
@@ -34,3 +36,5 @@ public:
 		return Socket(connfd);
 	}
 };
+
+#endif

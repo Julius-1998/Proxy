@@ -1,9 +1,18 @@
+#ifndef __BLINDFORWARDER_HPP__
+#define __BLINDFORWARDER_HPP__
+
+#include <poll.h>
+#include <sys/socket.h>
+
+
+#define MAX_READ (1 << 16)
+
 class BlindForwarder {
 private:
 	Socket in;
 	Socket out;
 public:
-	BlindForwarder(Socket&& in, Socket&& out) : in(in), out(out) {}
+	BlindForwarder(Socket&& in, Socket&& out) : in(std::move(in)), out(std::move(out)) {}
 
 	void forward() {
 		char buf[MAX_READ];
@@ -24,10 +33,12 @@ public:
 	            send(pfds[1].fd, buf, cnt1, 0);
 	        }
 	        if (pfds[1].revents & POLLIN) {
-	            cnt2 = recv(pfds[1], buf, MAX_READ, 0);
-	            send(pfds[0], buf, cnt2, 0);
+	            cnt2 = recv(pfds[1].fd, buf, MAX_READ, 0);
+	            send(pfds[0].fd, buf, cnt2, 0);
 	        }
 	        if (errno == ECONNRESET) break;
 	    }
 	}
 };
+
+#endif
