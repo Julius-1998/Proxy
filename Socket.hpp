@@ -1,6 +1,8 @@
 #ifndef __SOCKET_HPP__
 #define __SOCKET_HPP__
 
+#define MAX_LINE (1 << 12)
+
 extern "C" {
     #include "csapp.h"
 }
@@ -8,19 +10,17 @@ extern "C" {
 class Socket {
 private:
 	int fd = -1;
+    rio_t rio;
+
     std::string readLine() {
-        char buf[1] = {0};
-        std::string content;
-        while (*buf != '\n') {
-            int cnt = read(fd, buf, 1);
-            if (cnt <= 0)
-                // TODO
-            content.push_back(*buf);
-        }
-        return content;
+        char buf[MAX_LINE];
+        rio_readlineb(&rio, buf, MAX_LINE);
+        return std::string(buf);
     }
 public:
-	Socket(int fd) : fd(fd) {}
+	Socket(int fd) : fd(fd) {
+        rio_readinitb(&rio, fd);
+    }
 
 	Socket(Socket&& that) {
 		this->fd = that.fd;
