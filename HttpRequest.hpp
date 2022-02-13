@@ -10,7 +10,7 @@ public:
 	enum METHOD { GET, POST, CONNECT };
     METHOD method;
 
-	virtual HttpResponse handle(int fd) { return HttpResponse(); }; 
+	virtual HttpResponse handle(const Socket& out) { return HttpResponse(); }; 
     void setStatus(METHOD method) { this->method = method; }
     std::string getHost() { return "localhost"; }
     std::string getPort() { return "80"; }
@@ -19,7 +19,7 @@ public:
 class GetRequest : public HttpRequest {
 public:
     GetRequest() { setStatus(GET); }
-	virtual HttpResponse handle(int fd) override {
+	virtual HttpResponse handle(const Socket& out) override {
         return HttpResponse();
     }
     
@@ -31,7 +31,7 @@ class PostRequest : public HttpRequest {
 public:
     PostRequest() { setStatus(POST); }
 
-	virtual HttpResponse handle(int fd) override {
+	virtual HttpResponse handle(const Socket& out) override {
         return HttpResponse();
     }
 };
@@ -39,7 +39,7 @@ public:
 class ConnectRequest : public HttpRequest {
 public:
     ConnectRequest() { setStatus(CONNECT); }
-	virtual HttpResponse handle(int fd) override {
+	virtual HttpResponse handle(const Socket& out) override {
         return HttpResponse();
     }
 };
