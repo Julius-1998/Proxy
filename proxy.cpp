@@ -7,17 +7,19 @@
 #include "BlockingQueue.hpp"
 #include "ThreadPool.hpp"
 
-
+#include <iostream>
 void thread_func();
-
-SocketBuilder socket_buidler("80");
+void handler(int);
+SocketBuilder socket_buidler("12345");
 BlockingQueue<Socket> socket_queue(64);
-
+int cnt;
 int main(int argc, char const *argv[]) {
+    Signal(SIGPIPE, handler);
 	ThreadPool thread_pool(16);
 	thread_pool.execute(thread_func);
 	while (1) {
         socket_queue.push(std::move(socket_buidler.acceptTCPConnection()));  // NOTE: move can be omited
+                                                                                    std::cout << "Received Request " << (cnt++) << std::endl;
 	}
 	return 0;
 }
@@ -32,6 +34,10 @@ void thread_func() {
 		Task task(std::move(client_proxy_socket), std::move(proxy_server_socket), request);
 		task.execute();
 	}
+}
+
+void handler(int sig) {
+    return;
 }
 		// // OPTION 1
 		// HttpResponse response = request.handle(proxy_server_socket);

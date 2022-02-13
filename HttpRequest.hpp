@@ -6,14 +6,16 @@ class Socket;
 class HttpRequest {
 protected:
     HttpRequest() { }
+    std::string host;
+    std::string port;
 public:
 	enum METHOD { GET, POST, CONNECT };
     METHOD method;
-
+    HttpRequest(const std::string& host, const std::string& port) : host(host), port(port) {}
 	virtual HttpResponse handle(const Socket& out) { return HttpResponse(); }; 
     void setStatus(METHOD method) { this->method = method; }
-    std::string getHost() { return "localhost"; }
-    std::string getPort() { return "80"; }
+    std::string getHost() { return host; }
+    std::string getPort() { return port; }
 };
 
 class GetRequest : public HttpRequest {
