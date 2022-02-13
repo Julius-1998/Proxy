@@ -2,7 +2,7 @@
 #define __HTTPREQUEST_HPP__
 #include <string>
 
-
+class Socket;
 class HttpRequest {
 protected:
     HttpRequest() { }
