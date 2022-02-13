@@ -8,6 +8,19 @@ extern "C" {
 class Socket {
 private:
 	int fd = -1;
+    std::string readLine() {
+        char buf[1];
+        std::string content;
+        while (true) {
+            read(fd, buf, 1);
+            if (*buf == '\r') {
+                read(fd, buf, 1);
+                break;
+            }
+            content.push_back(*buf);
+        }
+        return content;
+    }
 public:
 	Socket(int fd) : fd(fd) {}
 
@@ -21,6 +34,8 @@ public:
 
 	HttpRequest recvRequest() {
         // TODO
+        std::string start_line = readLine();
+
         return ConnectRequest();
 	}
 
