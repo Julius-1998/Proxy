@@ -12,7 +12,9 @@ private:
         char buf[1] = {0};
         std::string content;
         while (*buf != '\n') {
-            read(fd, buf, 1);
+            int cnt = read(fd, buf, 1);
+            if (cnt <= 0)
+                // TODO
             content.push_back(*buf);
         }
         return content;
