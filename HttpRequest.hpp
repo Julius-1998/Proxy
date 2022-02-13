@@ -1,13 +1,14 @@
 #ifndef __HTTPREQUEST_HPP__
 #define __HTTPREQUEST_HPP__
 #include <string>
-
+#include <vector>
 class Socket;
 class HttpRequest {
 protected:
     HttpRequest() { }
     std::string host;
     std::string port;
+    std::vector<char> raw_data;
 public:
 	enum METHOD { GET, POST, CONNECT };
     METHOD method;

@@ -9,14 +9,10 @@ class Socket {
 private:
 	int fd = -1;
     std::string readLine() {
-        char buf[1];
+        char buf[1] = {0};
         std::string content;
-        while (true) {
+        while (*buf != '\n') {
             read(fd, buf, 1);
-            if (*buf == '\r') {
-                read(fd, buf, 1);
-                break;
-            }
             content.push_back(*buf);
         }
         return content;
@@ -34,6 +30,7 @@ public:
 
 	HttpRequest recvRequest() {
         // TODO
+        std::vector<char> raw_data;
         std::string start_line = readLine();
 
         return ConnectRequest();
