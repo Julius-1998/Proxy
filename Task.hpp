@@ -12,22 +12,26 @@ public:
         printf("-----------Received Request-----------\n");
         std::cout << request.getRawData().data() << std::endl; 
         printf("-----------End of Request-------------\n");
+        if (request.getMethod() == HttpRequest::CONNECT) {
+            HttpResponse response;
+            response.appendRawData("HTTP1.1 200 OK\r\n\r\n");
+            in.sendResponse(response);
+            BlindForwarder forwarder(std::move(in), std::move(out));
+			forwarder.forward();
+            return;
+        }
+
         out.sendRequest(request);
 		 // HttpResponse response = request.handle(out);
 		HttpResponse response = out.recvResponse();
         printf("-----------Received Request-----------\n");
         std::cout << response.getRawData().data() << std::endl; 
         printf("-----------End of Request-------------\n");
-		if (response.status == HttpResponse::OK && request.getMethod() == HttpRequest::CONNECT) {
-			BlindForwarder forwarder(std::move(in), std::move(out));
-			forwarder.forward();
-            return;
-		}
         keep_alive();
 	}
 
     void keep_alive() {
-        if (request.getField("Connection") != "keep-alive")
+        if (request.getField("CONNECTION") != "keep-alive" && request.getField("PROXY-CONNECTION") != "keep-alive")
             return;
         request = std::move(in.recvRequest());
         HttpResponse response = request.handle(out);

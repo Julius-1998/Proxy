@@ -15,7 +15,7 @@ BlockingQueue<Socket> socket_queue(64);
 int cnt;
 int main(int argc, char const *argv[]) {
     Signal(SIGPIPE, handler);
-	ThreadPool thread_pool(16);
+	ThreadPool thread_pool(32);
 	thread_pool.execute(thread_func);
 	while (1) {
         socket_queue.push(std::move(socket_buidler.acceptTCPConnection()));  // NOTE: move can be omited
