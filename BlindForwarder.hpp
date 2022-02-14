@@ -5,7 +5,7 @@
 #include <sys/socket.h>
 
 
-#define MAX_READ (1 << 16)
+// #define MAX_READ (1 << 16) Note: Defined in Socket.hpp
 
 class BlindForwarder {
 private:
