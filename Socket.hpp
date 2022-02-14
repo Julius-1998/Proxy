@@ -67,7 +67,7 @@ private:
         std::string content_length = request.getField("CONTENT-LENGTH");
         if (content_length == "")
             return;
-        char buf[MAX_READ];
+        char buf[MAX_READ + 1];
         size_t total = std::stoi(content_length);
         while (total) {
             size_t cnt = rio_readnb(&rio, buf, std::min(total, (size_t)MAX_READ));
@@ -80,7 +80,7 @@ private:
         std::string content_length = response.getField("CONTENT-LENGTH");
         if (content_length == "")
             return;
-        char buf[MAX_READ];
+        char buf[MAX_READ + 1];
         size_t total = std::stoi(content_length);
         while (total) {
             size_t cnt = rio_readnb(&rio, buf, std::min(total, (size_t)MAX_READ));
