@@ -3,9 +3,7 @@
 
 #define MAX_LINE (1 << 12)
 #define MAX_READ (1 << 16)
-extern "C" {
-    #include "csapp.h"
-}
+
 
 class Socket {
 private:
@@ -28,6 +26,36 @@ private:
         rio_readnb(&rio, buf, n);
         return std::string(buf);
     }
+
+    void parseHeader(HttpRequestWrapper& request) {
+        char key[128], value[1024];
+        while (true) {
+            std::string next_line = readLine();
+            request.appendRawData(next_line);
+            if (next_line == "\r\n")
+                break;
+            sscanf(next_line.c_str(), "%s[^:]: %s[^\r]", key, value);
+            request.setField(std::string(key), std::string(value));
+            if (!strcmp(key, "Host")) {
+                char host[128] = {0}, port[8] = {0};
+                sscanf(value, "%s[^:]:%s", host, port);
+                request.setHost(std::string(host));
+                if (strlen(port) == 0)
+                    request.setPort("80");
+                else
+                    request.setPort(std::string(port));
+            }
+        }
+    }
+
+    void parsePayload(HttpRequestWrapper& request) {
+        std::string content_length = request.getField("Content-Length");
+        if (content_length == "")
+            return;
+        char buf[MAX_READ];
+        rio_readnb(&rio, buf, std::stoi(content_length));
+        request.appendRawData(std::string(buf));
+    }
 public:
 	Socket(int fd) : fd(fd) {
         rio_readinitb(&rio, fd);
@@ -41,12 +69,18 @@ public:
 	Socket(Socket& that) = delete;
 	Socket(const Socket& that) = delete;
 
-	HttpRequest recvRequest() {
+	HttpRequestWrapper recvRequest() {
         // TODO
+        char buf1[128], buf2[1024], buf3[128];
         std::vector<char> raw_data;
-        std::string start_line = readLine();
-
-        return ConnectRequest();
+        std::string next_line = readLine();
+        sscanf(next_line.c_str(), "%s %s %s", buf1, buf2, buf3);
+        HttpRequestWrapper request(std::string((char*)buf1));
+        request.appendRawData(next_line);
+        request.setUrl(std::string(buf2));
+        parseHeader(request);
+        parsePayload(request);
+        return request;
 	}
 
 	HttpResponse recvResponse() {
@@ -54,7 +88,7 @@ public:
         return HttpResponse();
 	}
 
-	void sendRequest(const HttpRequest& request) {
+	void sendRequest(const HttpRequestWrapper& request) {
 
 	}
 

@@ -4,14 +4,14 @@ class Task {
 private:
 	Socket in;
 	Socket out;
-	HttpRequest request;
+	HttpRequestWrapper request;
 public:
-	Task(Socket&& in, Socket&& out, const HttpRequest& request) : in(std::move(in)), out(std::move(out)), request(request) {}
+	Task(Socket&& in, Socket&& out, HttpRequestWrapper&& request) : in(std::move(in)), out(std::move(out)), request(std::move(request)) {}
 
 	void execute() {
 		HttpResponse response = request.handle(out);
 		in.sendResponse(response);
-		if (response.status == HttpResponse::OK && request.method == HttpRequest::CONNECT) {
+		if (response.status == HttpResponse::OK && request.getMethod() == HttpRequest::CONNECT) {
 			BlindForwarder forwarder(std::move(in), std::move(out));
 			forwarder.forward();
             return;
@@ -20,9 +20,9 @@ public:
 	}
 
     void keep_alive() {
-        if (request.connection != HttpRequest::KEEP_ALIVE)
-            return
-        request = in.recvRequest();
+        if (request.getField("Connection") != "keep-alive")
+            return;
+        request = std::move(in.recvRequest());
         HttpResponse response = request.handle(out);
         in.sendResponse(response);
         // TODO
