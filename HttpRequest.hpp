@@ -1,13 +1,6 @@
 #ifndef __HTTPREQUEST_HPP__
 #define __HTTPREQUEST_HPP__
-#include <string>
-#include <vector>
-#include <unordered_map>
-#include <utility>
-extern "C" {
-    #include "csapp.h"
-}
-class Socket;
+
 class HttpRequest {
 protected:
     std::string host;
@@ -27,8 +20,10 @@ public:
             return header_fields[field];
         return "";
     }
-    std::vector<char>& getRawData() { return raw_data; }
+    const std::vector<char>& getRawData() { return raw_data; }
     void appendRawData(const std::string& data) { for (char c : data) raw_data.push_back(c); }
+
+    void appendRawData(const char* data) { while (*data) raw_data.push_back(*data++); }
     void setField(const std::string& k, const std::string& v) { header_fields[k] = v; }
     void setHost(const std::string& host) { this->host = host; }
     void setPort(const std::string& port) { this->port = port; }
@@ -43,7 +38,9 @@ class GetRequest : public HttpRequest {
 public:
     GetRequest() { setMethod(GET); }
 	virtual HttpResponse handle(const Socket& out) override {
-        return HttpResponse();
+       // out.sendRawData(getRawData().data(), getRawData().size());
+       // return out.recvResponse();
+       return HttpResponse();
     }
     
 
@@ -55,6 +52,8 @@ public:
     PostRequest() { setMethod(POST); }
 
 	virtual HttpResponse handle(const Socket& out) override {
+        // out.sendRawData(getRawData().data(), getRawData().size());
+        // return out.recvResponse();
         return HttpResponse();
     }
 };
@@ -63,6 +62,10 @@ class ConnectRequest : public HttpRequest {
 public:
     ConnectRequest() { setMethod(CONNECT); }
 	virtual HttpResponse handle(const Socket& out) override {
+        // out.sendRawData(getRawData().data(), getRawData().size());
+        //TODO
+        // Do we have to produce response ourself?
+        // return out.recvResponse();
         return HttpResponse();
     }
 };
@@ -107,8 +110,10 @@ public:
     std::string getHost() { return request->getHost(); }
     std::string getPort() { return request->getPort(); }
     std::string getField(const std::string& field) { return request->getField(field); }
-    std::vector<char>& getRawData() { return request->getRawData(); }
+    const std::vector<char>& getRawData() const { return request->getRawData(); }
     void appendRawData(const std::string& data) { request->appendRawData(data); }
+
+    void appendRawData(const char* data) { request->appendRawData(data); }
     void setField(const std::string& k, std::string v) { request->setField(k, v); }
     void setHost(const std::string& host) { request->setHost(host); }
     void setPort(const std::string& port) { request->setPort(port); }

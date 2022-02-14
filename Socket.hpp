@@ -27,7 +27,7 @@ private:
         return std::string(buf);
     }
 
-    void parseHeader(HttpRequestWrapper& request) {
+    void parseRequestHeader(HttpRequestWrapper& request) {
         char key[128], value[1024];
         while (true) {
             std::string next_line = readLine();
@@ -47,6 +47,17 @@ private:
             }
         }
     }
+    void parseResponseHeader(HttpResponse& response) {
+        char key[128], value[4096];
+        while (true) {
+            std::string next_line = readLine();
+            response.appendRawData(next_line);
+            if (next_line == "\r\n")
+                break;
+            sscanf(next_line.c_str(), "%s[^:]: %s[^\r]", key, value);
+            response.setField(std::string(key), std::string(value));
+        }
+    }
 
     void parsePayload(HttpRequestWrapper& request) {
         std::string content_length = request.getField("Content-Length");
@@ -54,7 +65,15 @@ private:
             return;
         char buf[MAX_READ];
         rio_readnb(&rio, buf, std::stoi(content_length));
-        request.appendRawData(std::string(buf));
+        request.appendRawData(buf);
+    }
+    void parsePayload(HttpResponse& response) {
+        std::string content_length = response.getField("Content-Length");
+        if (content_length == "")
+            return;
+        char buf[MAX_READ];
+        rio_readnb(&rio, buf, std::stoi(content_length));
+        response.appendRawData(buf);
     }
 public:
 	Socket(int fd) : fd(fd) {
@@ -78,23 +97,36 @@ public:
         HttpRequestWrapper request(std::string((char*)buf1));
         request.appendRawData(next_line);
         request.setUrl(std::string(buf2));
-        parseHeader(request);
+        parseRequestHeader(request);
         parsePayload(request);
         return request;
 	}
 
 	HttpResponse recvResponse() {
         // TODO
-        return HttpResponse();
+        char buf1[128], buf2[1024], buf3[128];
+        std::vector<char> raw_data;
+        std::string next_line = readLine();
+        sscanf(next_line.c_str(), "%s %s %s", buf1, buf2, buf3);
+        HttpResponse response;
+        response.appendRawData(next_line);
+        response.setField("status", std::string(buf2));
+        parseResponseHeader(response);
+        parsePayload(response);
+        return response;
 	}
 
 	void sendRequest(const HttpRequestWrapper& request) {
-
+        rio_writen(fd, request.getRawData().data(), request.getRawData().size());
 	}
 
 	void sendResponse(const HttpResponse& response) {
-
+        rio_writen(fd, response.getRawData().data(), response.getRawData().size());
 	}
+
+    void sendRawData(const char* raw_data, size_t size) {
+        rio_writen(fd, raw_data, size);
+    }
 
 	int getFileDescriptor() {
 		return fd;

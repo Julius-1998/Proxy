@@ -9,7 +9,9 @@ public:
 	Task(Socket&& in, Socket&& out, HttpRequestWrapper&& request) : in(std::move(in)), out(std::move(out)), request(std::move(request)) {}
 
 	void execute() {
-		HttpResponse response = request.handle(out);
+        out.sendRequest(request);
+		 // HttpResponse response = request.handle(out);
+		HttpResponse response = out.recvResponse();
 		in.sendResponse(response);
 		if (response.status == HttpResponse::OK && request.getMethod() == HttpRequest::CONNECT) {
 			BlindForwarder forwarder(std::move(in), std::move(out));
