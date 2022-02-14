@@ -14,7 +14,12 @@ private:
 
     std::string readLine() {
         char buf[MAX_LINE];
-        rio_readlineb(&rio, buf, MAX_LINE);
+        int cnt = rio_readlineb(&rio, buf, MAX_LINE);
+        if (cnt == 0)
+            return "";
+        if (cnt < 0)
+            return "";
+            // TODO throw error
         return std::string(buf);
     }
 

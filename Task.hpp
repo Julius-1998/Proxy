@@ -14,8 +14,21 @@ public:
 		if (response.status == HttpResponse::OK && request.method == HttpRequest::CONNECT) {
 			BlindForwarder forwarder(std::move(in), std::move(out));
 			forwarder.forward();
+            return;
 		}
+        keep_alive();
 	}
+
+    void keep_alive() {
+        if (request.connection != HttpRequest::KEEP_ALIVE)
+            return
+        request = in.recvRequest();
+        HttpResponse response = request.handle(out);
+        in.sendResponse(response);
+        // TODO
+        // if request or response is empty, return
+        keep_alive();
+    }
 };
 
 #endif
