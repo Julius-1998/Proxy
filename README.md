@@ -2,12 +2,14 @@
 
 TODO:
 
+
 - [ ] chunked
 - [ ] cache
 - [ ] log
 - [ ] error handling/try-catch exception
 - [ ] seg fault
 - [ ] keep-alive(proxy-connection)
-- [ ] test CONNECT
+- [X] test CONNECT
+- [ ] test POST
 
 
