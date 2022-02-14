@@ -1,7 +1,7 @@
 #ifndef __SOCKET_HPP__
 #define __SOCKET_HPP__
 
-#define MAX_LINE (1 << 12)
+#define MAX_LINE (1 << 16)
 #define MAX_READ (1 << 16)
 
 #include <algorithm>
