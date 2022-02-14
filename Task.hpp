@@ -15,7 +15,9 @@ public:
         out.sendRequest(request);
 		 // HttpResponse response = request.handle(out);
 		HttpResponse response = out.recvResponse();
-		in.sendResponse(response);
+        printf("-----------Received Request-----------\n");
+        std::cout << response.getRawData().data() << std::endl; 
+        printf("-----------End of Request-------------\n");
 		if (response.status == HttpResponse::OK && request.getMethod() == HttpRequest::CONNECT) {
 			BlindForwarder forwarder(std::move(in), std::move(out));
 			forwarder.forward();
