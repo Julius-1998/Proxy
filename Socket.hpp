@@ -4,6 +4,7 @@
 #define MAX_LINE (1 << 12)
 #define MAX_READ (1 << 16)
 
+#include <algorithm>
 
 class Socket {
 private:
@@ -21,11 +22,14 @@ private:
         return std::string(buf);
     }
 
-    std::string readn(size_t n) {
-        char buf[MAX_READ];
-        rio_readnb(&rio, buf, n);
-        return std::string(buf);
+
+    std::string toUpper(std::string s) {
+        std::transform(s.begin(), s.end(), s.begin(), 
+                   [](unsigned char c){ return std::toupper(c); } // correct
+                  );
+        return s;
     }
+
 
     void parseRequestHeader(HttpRequestWrapper& request) {
         char key[128], value[1024];
@@ -34,11 +38,11 @@ private:
             request.appendRawData(next_line);
             if (next_line == "\r\n")
                 break;
-            sscanf(next_line.c_str(), "%s[^:]: %s[^\r]", key, value);
-            request.setField(std::string(key), std::string(value));
-            if (!strcmp(key, "Host")) {
+            sscanf(next_line.c_str(), "%[^:]: %[^\r]", key, value);
+            request.setField(toUpper(std::string(key)), std::string(value));
+            if (toUpper(std::string(key)) ==  "HOST") {
                 char host[128] = {0}, port[8] = {0};
-                sscanf(value, "%s[^:]:%s", host, port);
+                sscanf(value, "%[^:]:%s", host, port);
                 request.setHost(std::string(host));
                 if (strlen(port) == 0)
                     request.setPort("80");
@@ -54,26 +58,36 @@ private:
             response.appendRawData(next_line);
             if (next_line == "\r\n")
                 break;
-            sscanf(next_line.c_str(), "%s[^:]: %s[^\r]", key, value);
-            response.setField(std::string(key), std::string(value));
+            sscanf(next_line.c_str(), "%[^:]: %[^\r]", key, value);
+            response.setField(toUpper(std::string(key)), std::string(value));
         }
     }
 
     void parsePayload(HttpRequestWrapper& request) {
-        std::string content_length = request.getField("Content-Length");
+        std::string content_length = request.getField("CONTENT-LENGTH");
         if (content_length == "")
             return;
         char buf[MAX_READ];
-        rio_readnb(&rio, buf, std::stoi(content_length));
-        request.appendRawData(buf);
+        size_t total = std::stoi(content_length);
+        while (total) {
+            size_t cnt = rio_readnb(&rio, buf, std::min(total, (size_t)MAX_READ));
+            request.appendRawData(buf);
+            total -= cnt;
+        }
+        //TODO error handling
     }
     void parsePayload(HttpResponse& response) {
-        std::string content_length = response.getField("Content-Length");
+        std::string content_length = response.getField("CONTENT-LENGTH");
         if (content_length == "")
             return;
         char buf[MAX_READ];
-        rio_readnb(&rio, buf, std::stoi(content_length));
-        response.appendRawData(buf);
+        size_t total = std::stoi(content_length);
+        while (total) {
+            size_t cnt = rio_readnb(&rio, buf, std::min(total, (size_t)MAX_READ));
+            response.appendRawData(buf);
+            total -= cnt;
+        }
+        // TODO error handling
     }
 public:
 	Socket(int fd) : fd(fd) {
@@ -82,6 +96,7 @@ public:
 
 	Socket(Socket&& that) {
 		this->fd = that.fd;
+        rio_readinitb(&rio, fd);
 		that.fd = -1;
 	}
 
@@ -110,7 +125,7 @@ public:
         sscanf(next_line.c_str(), "%s %s %s", buf1, buf2, buf3);
         HttpResponse response;
         response.appendRawData(next_line);
-        response.setField("status", std::string(buf2));
+        response.setField("STATUS", std::string(buf2));
         parseResponseHeader(response);
         parsePayload(response);
         return response;

@@ -19,7 +19,6 @@ int main(int argc, char const *argv[]) {
 	thread_pool.execute(thread_func);
 	while (1) {
         socket_queue.push(std::move(socket_buidler.acceptTCPConnection()));  // NOTE: move can be omited
-                                                                                    std::cout << "Received Request " << (cnt++) << std::endl;
 	}
 	return 0;
 }

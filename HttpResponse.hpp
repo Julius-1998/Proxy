@@ -4,6 +4,7 @@
 #include <vector>
 #include <unordered_map>
 #include <utility>
+#include <iostream>
 extern "C" {
     #include "csapp.h"
 }

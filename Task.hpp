@@ -9,6 +9,9 @@ public:
 	Task(Socket&& in, Socket&& out, HttpRequestWrapper&& request) : in(std::move(in)), out(std::move(out)), request(std::move(request)) {}
 
 	void execute() {
+        printf("-----------Received Request-----------\n");
+        std::cout << request.getRawData().data() << std::endl; 
+        printf("-----------End of Request-------------\n");
         out.sendRequest(request);
 		 // HttpResponse response = request.handle(out);
 		HttpResponse response = out.recvResponse();
