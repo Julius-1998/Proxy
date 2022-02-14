@@ -71,6 +71,7 @@ private:
         size_t total = std::stoi(content_length);
         while (total) {
             size_t cnt = rio_readnb(&rio, buf, std::min(total, (size_t)MAX_READ));
+            buf[cnt] = 0;
             request.appendRawData(buf);
             total -= cnt;
         }
@@ -84,6 +85,7 @@ private:
         size_t total = std::stoi(content_length);
         while (total) {
             size_t cnt = rio_readnb(&rio, buf, std::min(total, (size_t)MAX_READ));
+            buf[cnt] = 0;
             response.appendRawData(buf);
             total -= cnt;
         }
