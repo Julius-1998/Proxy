@@ -15,6 +15,7 @@ public:
     void setMethod(METHOD method) { this->method = method; }
     std::string getHost() { return host; }
     std::string getPort() { return port; }
+    std::string getUrl() { return url; }
     std::string getField(const std::string& field) {
         if (header_fields.count(field))
             return header_fields[field];
@@ -109,6 +110,7 @@ public:
     } 
     std::string getHost() { return request->getHost(); }
     std::string getPort() { return request->getPort(); }
+    std::string getUrl() { return request->getUrl(); }
     std::string getField(const std::string& field) { return request->getField(field); }
     const std::vector<char>& getRawData() const { return request->getRawData(); }
     void appendRawData(const std::string& data) { request->appendRawData(data); }

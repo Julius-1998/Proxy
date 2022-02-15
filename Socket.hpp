@@ -110,6 +110,8 @@ public:
         char buf1[128], buf2[1024], buf3[128];
         std::vector<char> raw_data;
         std::string next_line = readLine();
+        if (next_line == "") 
+            return HttpRequestWrapper("GET");
         sscanf(next_line.c_str(), "%s %s %s", buf1, buf2, buf3);
         HttpRequestWrapper request(std::string((char*)buf1));
         request.appendRawData(next_line);
@@ -124,6 +126,8 @@ public:
         char buf1[128], buf2[1024], buf3[128];
         std::vector<char> raw_data;
         std::string next_line = readLine();
+        if (next_line == "")
+            return HttpResponse();
         sscanf(next_line.c_str(), "%s %s %s", buf1, buf2, buf3);
         HttpResponse response;
         response.appendRawData(next_line);
