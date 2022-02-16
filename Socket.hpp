@@ -10,7 +10,7 @@ class Socket {
 private:
 	int fd = -1;
     rio_t rio;
-
+    int unique_id;
     std::string readLine() {
         char buf[MAX_LINE];
         int cnt = rio_readlineb(&rio, buf, MAX_LINE);
@@ -135,12 +135,15 @@ private:
 public:
 	Socket(int fd) : fd(fd) {
         rio_readinitb(&rio, fd);
+        unique_id = -1;
     }
-
+    Socket(int fd, int unique_id) : fd(fd), unique_id(unique_id) {}
 	Socket(Socket&& that) {
 		this->fd = that.fd;
+        this->unique_id = that.unique_id;
         rio_readinitb(&rio, fd);
 		that.fd = -1;
+        that.unique_id = -1
 	}
 
 	Socket(Socket& that) = delete;
@@ -152,10 +155,11 @@ public:
         std::vector<char> raw_data;
         std::string next_line = readLine();
         if (next_line == "") 
-            return HttpRequestWrapper("GET");
+            return HttpRequestWrapper(-1);
         sscanf(next_line.c_str(), "%s %s %s", buf1, buf2, buf3);
-        HttpRequestWrapper request(std::string((char*)buf1));
+        HttpRequestWrapper request(unique_id);
         request.appendRawData(next_line);
+        request.setField("METHOD", toUpper(std::string(buf1)));
         request.setUrl(std::string(buf2));
         parseRequestHeader(request);
         parsePayload(request);

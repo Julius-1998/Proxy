@@ -8,14 +8,18 @@ protected:
     std::string url;
     std::vector<char> raw_data;
     std::unordered_map<std::string, std::string> header_fields;
+    int unique_id;
 public:
 	enum METHOD { GET, POST, CONNECT };
     METHOD method;
-	virtual HttpResponse handle(const Socket& out) = 0; 
+    HttpRequest(int unique_id) : unique_id(unique_id) {}
+	HttpResponse handle(const Socket& out) = 0; 
     void setMethod(METHOD method) { this->method = method; }
+    int getUniqueId() { return unique_id; }
     std::string getHost() { return host; }
     std::string getPort() { return port; }
     std::string getUrl() { return url; }
+    std::string getCacheKey() { return getHost() + ":" + getPort() + getUrl(); }
     std::string getField(const std::string& field) {
         if (header_fields.count(field))
             return header_fields[field];
@@ -34,7 +38,7 @@ public:
     virtual ~HttpRequest() {}
 
 };
-
+/*
 class GetRequest : public HttpRequest {
 public:
     GetRequest() { setMethod(GET); }
@@ -43,9 +47,6 @@ public:
        // return out.recvResponse();
        return HttpResponse();
     }
-    
-
-    
 };
 
 class PostRequest : public HttpRequest {
@@ -70,13 +71,18 @@ public:
         return HttpResponse();
     }
 };
-
+*/
 
 class HttpRequestWrapper {
 private:
     HttpRequest* request;
 public:
-    HttpRequestWrapper(const std::string& method) {
+    HttpRequestWrapper(int unique_id) {
+        request = new HttpRequest(unique_id);
+    }
+    /*
+    HttpRequestWrapper(const std::string& method, int unique_id) {
+
         if (method == "GET") {
             request = new GetRequest();
         } else if (method == "POST") {
@@ -87,7 +93,7 @@ public:
             //TODO not implemented error
             request = nullptr;
         }
-    }
+    }*/
 
     HttpRequestWrapper& operator=(HttpRequestWrapper&& that) {
         request = that.request;
@@ -107,10 +113,12 @@ public:
     }
     HttpResponse handle(const Socket& out) {
         return request->handle(out);
-    } 
+    }
+    int getUniqueId() { return request->getUniqueId(); }
     std::string getHost() { return request->getHost(); }
     std::string getPort() { return request->getPort(); }
     std::string getUrl() { return request->getUrl(); }
+    std::string getCacheKey() { return request->getCacheKey(); }
     std::string getField(const std::string& field) { return request->getField(field); }
     const std::vector<char>& getRawData() const { return request->getRawData(); }
     void appendRawData(const std::string& data) { request->appendRawData(data); }

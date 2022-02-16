@@ -14,23 +14,28 @@ public:
         printf("-----------Received Request-----------\n");
         std::cout << request.getRawData().data() << std::endl; 
         printf("-----------End of Request-------------\n");
-        if (request.getMethod() == HttpRequest::CONNECT) {
+        if (request.getField("METHOD") = "CONNECT") {
             HttpResponse response;
             response.appendRawData("HTTP1.1 200 OK\r\n\r\n");
             in.sendResponse(response);
             BlindForwarder forwarder(std::move(in), std::move(out));
 			forwarder.forward();
             return;
+        } else if (request.getField("METHOD") == "GET") {
+
+        } else if (request.getField("METHOD") == "POST") {
+            out.sendRequest(request);
+		     // HttpResponse response = request.handle(out);
+		    HttpResponse response = out.recvResponse();
+            printf("-----------Received Response-----------\n");
+            std::cout << response.getRawData().data() << std::endl; 
+            printf("-----------End of Response-------------\n");
+            in.sendResponse(response);
+        } else {
+            //TODO
+            // throw std::exception()
         }
 
-        out.sendRequest(request);
-		 // HttpResponse response = request.handle(out);
-		HttpResponse response = out.recvResponse();
-        printf("-----------Received Response-----------\n");
-        std::cout << response.getRawData().data() << std::endl; 
-        printf("-----------End of Response-------------\n");
-        in.sendResponse(response);
-        // keep_alive();
 	}
 
 
