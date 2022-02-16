@@ -1,8 +1,8 @@
 CC = g++
 CFLAGS = -std=c++11 -Wall  -ggdb3
 
-all: proxy
-
+all:
+	(make clean; make proxy)
 csapp.o: csapp.c
 	gcc -Wall -c csapp.c
 

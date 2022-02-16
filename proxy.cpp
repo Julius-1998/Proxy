@@ -29,6 +29,8 @@ void thread_func() {
 	while (1) {
 		Socket client_proxy_socket = std::move(socket_queue.pop());  // NOTE: move can be omited
 		HttpRequestWrapper request = client_proxy_socket.recvRequest();
+        if (request.getRawData().empty())
+            continue; 
 		Socket proxy_server_socket = std::move(socket_buidler.openTCPConnection(request.getHost(), request.getPort()));  // NOTE: move can be omited
 		Task task(std::move(client_proxy_socket), std::move(proxy_server_socket), std::move(request));
 		task.execute();
