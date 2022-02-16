@@ -22,6 +22,25 @@ private:
         return std::string(buf);
     }
 
+    void parseCacheControl(const HttpResponse& response) {
+        std::string cc_fields = response.getField("CACHE-CONTROL");
+        if (cc_fields == "")
+            return;
+        char key[128], value[128];
+        const int len = cc_fields.size();
+        int i = 0;
+        while (i < len) {
+            std::string token;
+            while (i < len && cc_fields[i] != ',')
+                token.push_back(cc_fields[i++]);
+            key[0] = value[0] = 0;
+            sscanf(token.c_str(), "%[^=]=%s", key, value);
+            response.setField(toUpper(std::string(key)), strlen(value) ? std::string(value) : "true");
+            ++i;  // pass comma
+            while (i < len && std::isspace(cc_fields[i]))
+                ++i;
+        }
+    }
 
     std::string toUpper(std::string s) {
         std::transform(s.begin(), s.end(), s.begin(), 

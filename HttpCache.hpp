@@ -1,10 +1,8 @@
 #ifndef __HTTPCACHE_HPP__
 #define __HTTPCACHE_HPP__
 #include "RawCache.hpp"
-#include "HttpResponse.hpp"
 #include <string>
 
-class HttpResponse;
 class HttpCache {
 private:
     ConcurrentRandomEvictCache<std::string, HttpResponse> cache;

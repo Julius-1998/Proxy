@@ -1,5 +1,7 @@
 #ifndef __TASK_HPP__
 #define __TASK_HPP__
+
+#include "HttpCache.hpp"
 class Task {
 private:
 	Socket in;
