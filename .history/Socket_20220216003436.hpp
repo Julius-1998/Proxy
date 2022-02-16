@@ -103,8 +103,6 @@ private:
         std::string transfer_encoding_str = response.getField("TRANSFER-ENCODING");
         std::string content_length_str = response.getField("CONTENT-LENGTH");
         char buf[MAX_READ + 1];
-                        memset(buf, 0, MAX_READ + 1);
-
         if (content_length_str != "")
         {
             size_t content_length = std::stoi(content_length_str);
@@ -129,13 +127,11 @@ private:
             while (1)
             {
                 size_t cnt = rio_readlineb(&rio, buf, (size_t)MAX_READ);
-                if(cnt == 2) {
-                    if(buf[0]=='\r'&&buf[1]=='\n'){
-                        response.appendRawData(buf);
-                        return;
-                    }
-                }
+                printf("recv()'d %ld from chunked data\n", cnt);
+                
+                if(cnt <= 0) return;
                 response.appendRawData(buf);
+                response.appendRawData('\n');
                 memset(buf, 0, MAX_READ + 1);
             }
             return;

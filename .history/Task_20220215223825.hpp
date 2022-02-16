@@ -24,9 +24,9 @@ public:
         out.sendRequest(request);
 		 // HttpResponse response = request.handle(out);
 		HttpResponse response = out.recvResponse();
-        printf("-----------Received Response-----------\n");
+        printf("-----------Received Request-----------\n");
         std::cout << response.getRawData().data() << std::endl; 
-        printf("-----------End of Response-------------\n");
+        printf("-----------End of Request-------------\n");
         in.sendResponse(response);
         keep_alive();
 	}

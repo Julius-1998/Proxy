@@ -129,12 +129,13 @@ private:
             while (1)
             {
                 size_t cnt = rio_readlineb(&rio, buf, (size_t)MAX_READ);
+                printf("recv()'d %ld from chunked data\n", cnt);
+                
                 if(cnt == 2) {
-                    if(buf[0]=='\r'&&buf[1]=='\n'){
-                        response.appendRawData(buf);
-                        return;
+                    printf("returned");
+                    printf("buf %s",buf);
+                    return;
                     }
-                }
                 response.appendRawData(buf);
                 memset(buf, 0, MAX_READ + 1);
             }
