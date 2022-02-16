@@ -101,16 +101,15 @@ private:
         //  body length is determined by reading and decoding the chunked
         //  data until the transfer coding indicates the data is complete.
         std::string transfer_encoding_str = response.getField("TRANSFER-ENCODING");
-        std::string content_length_str = response.getField("CONTENT-LENGTH");
+        std::string content_length_str = request.getField("CONTENT-LENGTH");
         char buf[MAX_READ + 1];
-                        memset(buf, 0, MAX_READ + 1);
-
         if (content_length_str != "")
         {
-            size_t content_length = std::stoi(content_length_str);
+            size_t content_length = std::stoi(content_length);
+            char buf[MAX_READ + 1];
             while (content_length)
             {
-                size_t cnt = rio_readnb(&rio, buf, std::min(content_length, (size_t)MAX_READ));
+                size_t cnt = rio_readnb(&rio, buf, std::min(total, (size_t)MAX_READ));
                 buf[cnt] = 0;
                 response.appendRawData(buf);
                 content_length -= cnt;
@@ -119,6 +118,7 @@ private:
         }
         else if (transfer_encoding_str != "")
         {
+            std::cout << transfer_encoding_str << std::endl;
             std::stringstream ss(transfer_encoding_str);
             std::string s;
             std::vector<std::string> encodings;
@@ -126,17 +126,13 @@ private:
             {
                 encodings.push_back(s);
             }
-            while (1)
+            std::getline(ss, s, '\r');
+            encodings.push_back(s);
+            size_t cnt = 0;
+            while (cnt > 0)
             {
-                size_t cnt = rio_readlineb(&rio, buf, (size_t)MAX_READ);
-                if(cnt == 2) {
-                    if(buf[0]=='\r'&&buf[1]=='\n'){
-                        response.appendRawData(buf);
-                        return;
-                    }
-                }
-                response.appendRawData(buf);
-                memset(buf, 0, MAX_READ + 1);
+                cnt = rio_readnb(&rio, buf, (size_t)MAX_READ);
+                request.appendRawData(buf);
             }
             return;
         }
