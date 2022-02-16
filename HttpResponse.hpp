@@ -5,9 +5,6 @@
 #include <unordered_map>
 #include <utility>
 #include <iostream>
-extern "C" {
-    #include "csapp.h"
-}
 
 class Socket;
 class HttpResponse {
@@ -34,11 +31,20 @@ public:
        raw_data = std::move(that.raw_data);
        header_fields = std::move(that.header_fields);
     }
+// ---------------------------------
+    HttpResponse(const HttpResponse& that) {
+        raw_data = that.raw_data;
+        header_fields = that.header_fields;
+    }
 
-    HttpResponse(HttpResponse& that) = delete;
-    HttpResponse(const HttpResponse& that) = delete;
-
-
+    HttpResponse& operator=(const HttpResponse& that) {
+        if (this == &that)
+            return *this;
+        raw_data = that.raw_data;
+        header_fields = that.header_fields;
+        return *this;
+    }
+// -----------------------------------
 };
 
 
