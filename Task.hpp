@@ -30,9 +30,11 @@ public:
         std::cout << response.getRawData().data() << std::endl; 
         printf("-----------End of Response-------------\n");
         in.sendResponse(response);
-        keep_alive();
+        // keep_alive();
 	}
 
+
+    // Note: TA says keep-alive is ignored
     void keep_alive() {
         if (request.getField("CONNECTION") != "keep-alive" && request.getField("PROXY-CONNECTION") != "keep-alive")
             return;
