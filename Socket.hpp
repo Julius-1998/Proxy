@@ -42,6 +42,26 @@ private:
         }
     }
 
+    void parseCacheControl(const HttpResponse& request) {
+        std::string cc_fields = request.getField("CACHE-CONTROL");
+        if (cc_fields == "")
+            return;
+        char key[128], value[128];
+        const int len = cc_fields.size();
+        int i = 0;
+        while (i < len) {
+            std::string token;
+            while (i < len && cc_fields[i] != ',')
+                token.push_back(cc_fields[i++]);
+            key[0] = value[0] = 0;
+            sscanf(token.c_str(), "%[^=]=%s", key, value);
+            request.setField(toUpper(std::string(key)), strlen(value) ? std::string(value) : "true");
+            ++i;  // pass comma
+            while (i < len && std::isspace(cc_fields[i]))
+                ++i;
+        }
+    }
+
     std::string toUpper(std::string s) {
         std::transform(s.begin(), s.end(), s.begin(), 
                    [](unsigned char c){ return std::toupper(c); } // correct
@@ -57,6 +77,7 @@ private:
             request.appendRawData(next_line);
             if (next_line == "\r\n")
                 break;
+            key[0] = value[0] = 0; // added reset
             sscanf(next_line.c_str(), "%[^:]: %[^\r]", key, value);
             request.setField(toUpper(std::string(key)), std::string(value));
             if (toUpper(std::string(key)) ==  "HOST") {
@@ -77,6 +98,7 @@ private:
             response.appendRawData(next_line);
             if (next_line == "\r\n")
                 break;
+            key[0] = value[0] = 0; // added reset
             sscanf(next_line.c_str(), "%[^:]: %[^\r]", key, value);
             response.setField(toUpper(std::string(key)), std::string(value));
         }
@@ -137,6 +159,7 @@ public:
         request.setUrl(std::string(buf2));
         parseRequestHeader(request);
         parsePayload(request);
+        parseCacheControl(request);
         return request;
 	}
 
@@ -153,6 +176,7 @@ public:
         response.setField("STATUS", std::string(buf2));
         parseResponseHeader(response);
         parsePayload(response);
+        parseCacheControl(response);
         return response;
 	}
 
