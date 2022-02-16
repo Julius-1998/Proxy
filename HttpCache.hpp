@@ -7,8 +7,17 @@ class HttpCache {
 private:
     ConcurrentRandomEvictCache<std::string, HttpResponse> cache;
 
-    bool isExpired(const HttpResponse& response) {
-        return false;
+    HttpRequestWrapper createRevalidationRequest(const HttpRequestWrapper& request) {
+        HttpRequestWrapper revalidation_request(request.getUniqueId());
+        revalidation_request.appendRawData(request.getField("METHOD") + " " + request.getUrl() + " " + "HTTP1.1\r\n");
+        revalidation_request.appendRawData("Host: " + request.getField("HOST") + "\r\n");
+        if (request.getField("LAST-MODIFIED") != "")
+            revalidation_request.appendRawData("If-Modified-Since: " + request.getField("LAST-MODIFIED") + "\r\n");
+        if (request.getField("ETAG") != "")
+            revalidation_request.appendRawData("If-None-Match: " + request.getField("ETAG") + "\r\n");
+        revalidation_request.appendRawData("\r\n");
+        return revalidation_request;
+
     }
 public:
     HttpCache(int max_capacity, int size) : cache(max_capacity, size) { }
@@ -17,22 +26,47 @@ public:
     std::optional<HttpResponse> get(const HttpRequest& request, const Socket& out) {
         auto key = request.getCacheKey();
         auto optional_response = cache.get(key);
-        if (!op_res.has_value()) {
+        if (!optional_response.has_value()) {
             // TODO
             // log not in cache 
             return optional_response;
         }
-        if (isExpired(response)) {
-            // log expires
+        if (response.needsRevalidation() && response.isRevalidatable()) {
+            // TODO
+            // log needs revalidation
+            HttpRequestWrapper revalidation_request = createRevalidationRequest(request);
+            out.sendRequest(revalidation_request);
+            HttpResponse response = out.recvResponse();
+            if (response.getField("STATUS") == "304") {
+                //TODO
+                //log revalidation succeeded
+                return optional_response;
+                
+            } else if (response.getField("STATUS") == "200") {
+                //TODO
+                // log revalidation failed
+                Cache.put(request, response);
+                return {response};
+            } else {
+                //TODO
+                //ERROR
+            }
+            
         }
-        out.send(HttpRequest());
-        HttpResponse response = out.recvResponse();
-        if (response.getRawData().empty())
-            return {};
-        if (response.getField("STATUS") == "304") {
-            // log revalidate
+        if (response.needsRevalidation() && !reponse.isRevalidatable() || response.isExpired()) {
+            //TODO
+            //log expired
+            out.sendRequest(request);
+            HttpResponse response = out.recvResponse();
+            if (response.getField("STATUS") != "200")
+                //TODO throw ERROR
+            Cache.put(request, response);
+            return {response};
         }
 
+        // TODO
+        // log in cache valid
+        return optional_response;
     }
 
     void put(const HttpRequestWrapper& request, const HttpResponse& response) {

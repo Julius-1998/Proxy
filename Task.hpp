@@ -28,8 +28,13 @@ public:
                 in.sendResponse(optional_response.value())
                 return;
             }
+            in.sendRequest(request);
             HttpResponse response = out.recvResponse();
-            Cache.push(request, response);
+            if (response.getField("STATUS") == "200") {
+                Cache.push(request, response);
+            } else {
+                // TODO ERROR
+            }
             printf("-----------Received Response-----------\n");
             std::cout << response.getRawData().data() << std::endl; 
             printf("-----------End of Response-------------\n");

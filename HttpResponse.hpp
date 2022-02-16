@@ -62,7 +62,34 @@ public:
         std::strptime(s.c_str(), "%a, %d %b %Y %T", t);
 	    return currentTimeInSeconds() - std::mktime(t);
     }
+    bool isExpired() {
+        if (header_fields.getField("max-age") != "" || header_fields.getField("s-maxage") != "")
+            return false;
+        std::string response_time = header_fields.getField("DATE");
+        std::string expire_time = header_fields.getField("EXPIRES");
+        if (expire_time != "") 
+            return elapsedSecondsToNow(expire_time) >= 0;
+        return elapsedSecondsToNow(response_time) >= HEURISTIC_TIME;
+    }
 
+    bool isRevalidatable() {
+        return header_fields.getField("LAST-MODIFIED") != "" || header_fields.getField("ETAG") != "";
+    }
+    bool needsRevalidation() {
+        if (isAlwaysRevalidate())
+            return true;
+        if (header_fields.getField("CACHE-CONTROL") == "")
+            return false;
+        if (header_fields.getField("s-maxage") != "")
+            return elapsedSecondsToNow(getDate()) >= std::stoi(header_fields.getField("s-maxage")) + std::stoi(header_fields.getField("max-stale") + "0") / 10 - std::stoi(header_fields.getField("min-fresh") + "0") / 10;
+        if (header_fields.getField("max-age") != "")
+            return elapsedSecondsToNow(getDate()) >= std::stoi(header_fields.getField("maxage")) + std::stoi(header_fields.getField("max-stale") + "0") / 10 - std::stoi(header_fields.getField("min-fresh") + "0") / 10;
+        if (header_fields.getField("must-revalidate") != "")
+            return true;
+        if (header_fields.getField("proxy-revalidate") != "")
+            return true;
+        return false;
+    }
     std::string getDate() {
         struct tm* t;
         std::strptime(header_fields.getField("DATE"), "%a, %d %b %Y %T", t);
