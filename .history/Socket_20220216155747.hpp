@@ -77,26 +77,29 @@ private:
         std::string transfer_encoding_str = request.getField("TRANSFER-ENCODING");
         char buf[MAX_READ + 1];
 
-        if (content_length != "")
+        if (content_length == ""){
+        size_t total = std::stoi(content_length);
+        while (total)
         {
-            size_t total = std::stoi(content_length);
-            while (total)
-            {
-                size_t cnt = rio_readnb(&rio, buf, std::min(total, (size_t)MAX_READ));
-                buf[cnt] = 0;
-                request.appendRawData(buf);
-                total -= cnt;
-            }
+            size_t cnt = rio_readnb(&rio, buf, std::min(total, (size_t)MAX_READ));
+            buf[cnt] = 0;
+            request.appendRawData(buf);
+            total -= cnt;
         }
-        else if (transfer_encoding_str != "")
+        }else if (transfer_encoding_str != "")
         {
+            std::stringstream ss(transfer_encoding_str);
+            std::string s;
+            std::vector<std::string> encodings;
+            while (std::getline(ss, s, ','))
+            {
+                encodings.push_back(s);
+            }
             while (1)
             {
                 size_t cnt = rio_readlineb(&rio, buf, (size_t)MAX_READ);
-                if (cnt == 2)
-                {
-                    if (buf[0] == '\r' && buf[1] == '\n')
-                    {
+                if(cnt == 2) {
+                    if(buf[0]=='\r'&&buf[1]=='\n'){
                         request.appendRawData(buf);
                         return;
                     }
@@ -124,7 +127,7 @@ private:
         std::string transfer_encoding_str = response.getField("TRANSFER-ENCODING");
         std::string content_length_str = response.getField("CONTENT-LENGTH");
         char buf[MAX_READ + 1];
-        memset(buf, 0, MAX_READ + 1);
+                        memset(buf, 0, MAX_READ + 1);
 
         if (content_length_str != "")
         {
@@ -150,10 +153,8 @@ private:
             while (1)
             {
                 size_t cnt = rio_readlineb(&rio, buf, (size_t)MAX_READ);
-                if (cnt == 2)
-                {
-                    if (buf[0] == '\r' && buf[1] == '\n')
-                    {
+                if(cnt == 2) {
+                    if(buf[0]=='\r'&&buf[1]=='\n'){
                         response.appendRawData(buf);
                         return;
                     }
