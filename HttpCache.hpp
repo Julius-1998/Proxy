@@ -15,10 +15,12 @@ public:
 
 
     std::optional<HttpResponse> get(const HttpRequest& request, const Socket& out) {
-        auto opt_res = cache.get(url);
+        auto key = request.getCacheKey();
+        auto optional_response = cache.get(key);
         if (!op_res.has_value()) {
-            // log not in cache
-            return opt_res;
+            // TODO
+            // log not in cache 
+            return optional_response;
         }
         if (isExpired(response)) {
             // log expires
@@ -27,15 +29,35 @@ public:
         HttpResponse response = out.recvResponse();
         if (response.getRawData().empty())
             return {};
-        if (response.getField("status") == "304") {
+        if (response.getField("STATUS") == "304") {
             // log revalidate
         }
 
     }
 
-    void put(const HttpRequest& request, const HttpResponse& response) {
-        setAge(response);
-        cache.put(url);
+    void put(const HttpRequestWrapper& request, const HttpResponse& response) {
+        auto request_cachable_msg = request.isCachable();
+        if (request_cachable_msg != "") {
+            //TODO
+            //log(error_msg) no-store
+            return;
+        }
+        auto response_cachable_msg = response.isCachable();
+        if (response_cachable_msg != "") {
+            //TODO log
+            // 
+            //
+            return;
+        }
+        cache.put(request.getCacheKey(), response);
+        if (response.isAlwaysRevalidate()) {
+            //TODO
+            //log in cache but need revalidate
+        } else {
+            //TODO
+            //log cached expires at XXX
+            //reponse.getDate();
+        }
 
     }
 

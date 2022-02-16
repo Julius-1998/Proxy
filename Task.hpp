@@ -2,6 +2,8 @@
 #define __TASK_HPP__
 
 #include "HttpCache.hpp"
+HttpCache Cache(16, 8);
+
 class Task {
 private:
 	Socket in;
@@ -20,12 +22,20 @@ public:
             in.sendResponse(response);
             BlindForwarder forwarder(std::move(in), std::move(out));
 			forwarder.forward();
-            return;
         } else if (request.getField("METHOD") == "GET") {
-
+            auto optional_response = Cache.get(request, out);
+            if (opt_res.has_value()) {
+                in.sendResponse(optional_response.value())
+                return;
+            }
+            HttpResponse response = out.recvResponse();
+            Cache.push(request, response);
+            printf("-----------Received Response-----------\n");
+            std::cout << response.getRawData().data() << std::endl; 
+            printf("-----------End of Response-------------\n");
+            in.sendResponse(response);
         } else if (request.getField("METHOD") == "POST") {
             out.sendRequest(request);
-		     // HttpResponse response = request.handle(out);
 		    HttpResponse response = out.recvResponse();
             printf("-----------Received Response-----------\n");
             std::cout << response.getRawData().data() << std::endl; 
@@ -39,7 +49,8 @@ public:
 	}
 
 
-    // Note: TA says keep-alive is ignored
+    /** Note: TA says keep-alive is ignored
+     *
     void keep_alive() {
         if (request.getField("CONNECTION") != "keep-alive" && request.getField("PROXY-CONNECTION") != "keep-alive")
             return;
@@ -57,6 +68,7 @@ public:
         // if request or response is empty, return
         keep_alive();
     }
+    */
 };
 
 #endif

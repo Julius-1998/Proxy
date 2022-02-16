@@ -34,7 +34,11 @@ public:
     void setPort(const std::string& port) { this->port = port; }
     void setUrl(const std::string& url) { this->url = url; }
     METHOD getMethod() { return method; }
-
+    std::string isCachable() {
+        if (header_fields.getField("no-store") != "")
+            return "";
+        return "request specifies no-cache"
+    }
     virtual ~HttpRequest() {}
 
 };
@@ -129,6 +133,8 @@ public:
     void setPort(const std::string& port) { request->setPort(port); }
     void setUrl(const std::string& url) { request->setUrl(url); }
     HttpRequest::METHOD getMethod() { return request->getMethod(); }
+
+    std::string isCachable() { return request->isCachable(); }
     ~HttpRequestWrapper() {
         delete request;
     }
