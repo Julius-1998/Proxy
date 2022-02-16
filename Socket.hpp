@@ -5,6 +5,7 @@
 #define MAX_READ (1 << 16)
 
 #include <algorithm>
+#include <sstream>
 
 class Socket {
 private:
@@ -89,6 +90,30 @@ private:
             response.appendRawData(buf);
             total -= cnt;
         }
+         //1.Any response to a HEAD request or 1xx or 204 or 304, no payload
+        // int status = std::stoi(response.getField("STATUS"));
+        // if(status == 204||status == 304|| status /100 == 1){
+        //     return;
+        // }
+        // //2.if reponse to connect with 200, no content-length or transfer-encoding, to be completed elsewhere
+        // //3.if transfer-encoding is present and chunked transfer coding is the final encoding
+        // std::string transfer_encoding_str = response.getField("TRANSFER-ENCODING");
+        // if(transfer_encoding_str!=""){
+        //     std::cout<<transfer_encoding_str<<std::endl;
+        //     std::stringstream ss(transfer_encoding_str);
+        //     std::string s;
+        //     std::vector<std::string> encodings;
+        //     while(std::getline(ss,s,',')){
+        //         encodings.push_back(s);
+        //     }
+        //     std::getline(ss,s,'\r');
+        //     encodings.push_back(s);
+        //     if(encodings.back()=="chunked"){
+                
+        //     }
+        // }else{
+
+        // }
         // TODO error handling
     }
 public:
