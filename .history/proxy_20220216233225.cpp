@@ -14,8 +14,8 @@ SocketBuilder socket_buidler("12345");
 BlockingQueue<Socket> socket_queue(64);
 int cnt;
 int main(int argc, char const *argv[]) {
-	Logger* logger = Logger::getLogger();
-	logger->log("test");
+	Logger* logger = Logger::getLogger("log.txt");
+	logger.log("test");
     Signal(SIGPIPE, handler);
 	ThreadPool thread_pool(32);
 	thread_pool.execute(thread_func);
