@@ -28,14 +28,14 @@ public:
 		}
 		return Socket(fd);
 	}
-	Socket acceptTCPConnection() {
+	Socket acceptTCPConnection(int unique_id) {
         
 		int connfd = accept(listenfd, (SA*)&clientaddr, &clientlen);
         fprintf(stderr, "Request from %s\n", inet_ntoa(((struct sockaddr_in *)&clientaddr)->sin_addr));
 		if (connfd == -1) {
 			// TODO
 		}
-		return Socket(connfd);
+		return Socket(connfd, unique_id);
 	}
 };
 
