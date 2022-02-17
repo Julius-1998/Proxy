@@ -92,7 +92,7 @@ public:
         } else {
             //TODO
             //log cached expires at XXX
-            //reponse.getDate();
+            //reponse.getExpiringDateString();
         }
 
     }
