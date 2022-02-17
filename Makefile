@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -std=c++11 -Wall  -ggdb3
+CFLAGS = -std=c++17 -Wall 
 
 all:
 	(make clean; make proxy)

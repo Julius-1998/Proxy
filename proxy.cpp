@@ -19,8 +19,9 @@ int main(int argc, char const *argv[]) {
     Signal(SIGPIPE, handler);
 	ThreadPool thread_pool(32);
 	thread_pool.execute(thread_func);
+    int id_counter = 1;
 	while (1) {
-        socket_queue.push(std::move(socket_buidler.acceptTCPConnection()));  // NOTE: move can be omited
+        socket_queue.push(std::move(socket_buidler.acceptTCPConnection(id_counter++)));  // NOTE: move can be omited
 	}
 	return 0;
 }

@@ -12,9 +12,8 @@ class Socket
 private:
     int fd = -1;
     rio_t rio;
-
-    std::string readLine()
-    {
+    int unique_id;
+    std::string readLine() {
         char buf[MAX_LINE];
         int cnt = rio_readlineb(&rio, buf, MAX_LINE);
         if (cnt == 0)
@@ -25,12 +24,50 @@ private:
         return std::string(buf);
     }
 
-    std::string toUpper(std::string s)
-    {
-        std::transform(s.begin(), s.end(), s.begin(),
-                       [](unsigned char c)
-                       { return std::toupper(c); } // correct
-        );
+    void parseCacheControl(HttpResponse& response) {
+        std::string cc_fields = response.getField("CACHE-CONTROL");
+        if (cc_fields == "")
+            return;
+        char key[128], value[128];
+        const int len = cc_fields.size();
+        int i = 0;
+        while (i < len) {
+            std::string token;
+            while (i < len && cc_fields[i] != ',')
+                token.push_back(cc_fields[i++]);
+            key[0] = value[0] = 0;
+            sscanf(token.c_str(), "%[^=]=%s", key, value);
+            response.setField(toUpper(std::string(key)), strlen(value) ? std::string(value) : "true");
+            ++i;  // pass comma
+            while (i < len && std::isspace(cc_fields[i]))
+                ++i;
+        }
+    }
+
+    void parseCacheControl(HttpRequestWrapper& request) {
+        std::string cc_fields = request.getField("CACHE-CONTROL");
+        if (cc_fields == "")
+            return;
+        char key[128], value[128];
+        const int len = cc_fields.size();
+        int i = 0;
+        while (i < len) {
+            std::string token;
+            while (i < len && cc_fields[i] != ',')
+                token.push_back(cc_fields[i++]);
+            key[0] = value[0] = 0;
+            sscanf(token.c_str(), "%[^=]=%s", key, value);
+            request.setField(toUpper(std::string(key)), strlen(value) ? std::string(value) : "true");
+            ++i;  // pass comma
+            while (i < len && std::isspace(cc_fields[i]))
+                ++i;
+        }
+    }
+
+    std::string toUpper(std::string s) const {
+        std::transform(s.begin(), s.end(), s.begin(), 
+                   [](unsigned char c){ return std::toupper(c); } // correct
+                  );
         return s;
     }
 
@@ -43,6 +80,7 @@ private:
             request.appendRawData(next_line);
             if (next_line == "\r\n")
                 break;
+            key[0] = value[0] = 0; // added reset
             sscanf(next_line.c_str(), "%[^:]: %[^\r]", key, value);
             request.setField(toUpper(std::string(key)), std::string(value));
             if (toUpper(std::string(key)) == "HOST")
@@ -66,6 +104,7 @@ private:
             response.appendRawData(next_line);
             if (next_line == "\r\n")
                 break;
+            key[0] = value[0] = 0; // added reset
             sscanf(next_line.c_str(), "%[^:]: %[^\r]", key, value);
             response.setField(toUpper(std::string(key)), std::string(value));
         }
@@ -82,9 +121,9 @@ private:
             size_t total = std::stoi(content_length);
             while (total)
             {
+                buf[0] = 0;
                 size_t cnt = rio_readnb(&rio, buf, std::min(total, (size_t)MAX_READ));
-                buf[cnt] = 0;
-                request.appendRawData(buf);
+                request.appendRawData(buf, cnt);
                 total -= cnt;
             }
         }
@@ -131,9 +170,9 @@ private:
             size_t content_length = std::stoi(content_length_str);
             while (content_length)
             {
+                buf[0] = 0;
                 size_t cnt = rio_readnb(&rio, buf, std::min(content_length, (size_t)MAX_READ));
-                buf[cnt] = 0;
-                response.appendRawData(buf);
+                response.appendRawData(buf, cnt);
                 content_length -= cnt;
             }
             return;
@@ -170,14 +209,16 @@ public:
     Socket(int fd) : fd(fd)
     {
         rio_readinitb(&rio, fd);
+        unique_id = -1;
     }
-
-    Socket(Socket &&that)
-    {
-        this->fd = that.fd;
+    Socket(int fd, int unique_id) : fd(fd), unique_id(unique_id) {}
+	Socket(Socket&& that) {
+		this->fd = that.fd;
+        this->unique_id = that.unique_id;
         rio_readinitb(&rio, fd);
-        that.fd = -1;
-    }
+		that.fd = -1;
+        that.unique_id = -1;
+	}
 
     Socket(Socket &that) = delete;
     Socket(const Socket &that) = delete;
@@ -188,14 +229,16 @@ public:
         char buf1[128], buf2[1024], buf3[128];
         std::vector<char> raw_data;
         std::string next_line = readLine();
-        if (next_line == "")
-            return HttpRequestWrapper("GET");
+        if (next_line == "") 
+            return HttpRequestWrapper(-1);
         sscanf(next_line.c_str(), "%s %s %s", buf1, buf2, buf3);
-        HttpRequestWrapper request(std::string((char *)buf1));
+        HttpRequestWrapper request(unique_id);
         request.appendRawData(next_line);
+        request.setField("METHOD", toUpper(std::string(buf1)));
         request.setUrl(std::string(buf2));
         parseRequestHeader(request);
         parsePayload(request);
+        parseCacheControl(request);
         return request;
     }
 
@@ -213,6 +256,7 @@ public:
         response.setField("STATUS", std::string(buf2));
         parseResponseHeader(response);
         parsePayload(response);
+        parseCacheControl(response);
         return response;
     }
 

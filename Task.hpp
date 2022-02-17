@@ -1,5 +1,9 @@
 #ifndef __TASK_HPP__
 #define __TASK_HPP__
+
+#include "HttpCache.hpp"
+HttpCache Cache(16, 8);
+
 class Task {
 private:
 	Socket in;
@@ -12,25 +16,46 @@ public:
         printf("-----------Received Request-----------\n");
         std::cout << request.getRawData().data() << std::endl; 
         printf("-----------End of Request-------------\n");
-        if (request.getMethod() == HttpRequest::CONNECT) {
+        if (request.getField("METHOD") == "CONNECT") {
             HttpResponse response;
             response.appendRawData("HTTP1.1 200 OK\r\n\r\n");
             in.sendResponse(response);
             BlindForwarder forwarder(std::move(in), std::move(out));
 			forwarder.forward();
-            return;
+        } else if (request.getField("METHOD") == "GET") {
+            auto optional_response = Cache.get(request, out);
+            if (optional_response.has_value()) {
+                in.sendResponse(optional_response.value());
+                return;
+            }
+            out.sendRequest(request);
+            HttpResponse response = out.recvResponse();
+            if (response.getField("STATUS") == "200") {
+                Cache.put(request, response);
+            } else {
+                // TODO ERROR
+            }
+            printf("-----------Received Response-----------\n");
+            std::cout << response.getRawData().data() << std::endl; 
+            printf("-----------End of Response-------------\n");
+            in.sendResponse(response);
+        } else if (request.getField("METHOD") == "POST") {
+            out.sendRequest(request);
+		    HttpResponse response = out.recvResponse();
+            printf("-----------Received Response-----------\n");
+            std::cout << response.getRawData().data() << std::endl; 
+            printf("-----------End of Response-------------\n");
+            in.sendResponse(response);
+        } else {
+            //TODO
+            // throw std::exception()
         }
 
-        out.sendRequest(request);
-		 // HttpResponse response = request.handle(out);
-		HttpResponse response = out.recvResponse();
-        printf("-----------Received Response-----------\n");
-        std::cout << response.getRawData().data() << std::endl; 
-        printf("-----------End of Response-------------\n");
-        in.sendResponse(response);
-        keep_alive();
 	}
 
+
+    /** Note: TA says keep-alive is ignored
+     *
     void keep_alive() {
         if (request.getField("CONNECTION") != "keep-alive" && request.getField("PROXY-CONNECTION") != "keep-alive")
             return;
@@ -49,6 +74,7 @@ public:
         keep_alive();
 
     }
+    */
 };
 
 #endif
