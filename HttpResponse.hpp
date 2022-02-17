@@ -8,6 +8,9 @@
 #include <ctime>
 #define HEURISTIC_TIME 86400
 
+extern "C" {
+    #include "csapp.h"
+}
 class Socket;
 class HttpResponse {
 protected:
@@ -18,9 +21,9 @@ public:
     STATUS status;
     HttpResponse() : status(OK) { }	
 
-    std::string getField(const std::string& field) {
+    std::string getField(const std::string& field) const {
         if (header_fields.count(field))
-            return header_fields[field];
+            return header_fields.at(field);
         return "";
     }
     const std::vector<char>& getRawData() const { return raw_data; }
@@ -28,72 +31,72 @@ public:
     void appendRawData(const char* data) { while (*data) raw_data.push_back(*data++); }
     void setField(const std::string& k, const std::string& v) { header_fields[k] = v; }
 
-    std::string isCachable() {
-        if (header_fields.getField("no-store") != "")
-            return "response specifies no-store"
-        if (header_fields.getField("private") != "")
+    std::string isCachable() const {
+        if (getField("no-store") != "")
+            return "response specifies no-store";
+        if (getField("private") != "")
             return "response specifies private";
         return "";
     }
 
-    bool isMaxAgeZero() {
-        header_fields.getField("s-maxage") == "0" || header_fields.getField("max-age") == "0";
+    bool isMaxAgeZero() const {
+        return getField("s-maxage") == "0" || getField("max-age") == "0";
     }
 
-    bool isAlwaysRevalidate() {
-        return header_fields.getField("no-cache") != "" || isMaxAgeZero();
+    bool isAlwaysRevalidate() const {
+        return getField("no-cache") != "" || isMaxAgeZero();
     }
     
-    std::string currentTimeInString() {
+    std::string currentTimeInString() const {
 	    std::time_t t;
 	    std::time(&t);
 	    auto p = std::gmtime(&t);
 	    return std::asctime(p);
     }
 
-    std::time_t currentTimeInSeconds() {
+    std::time_t currentTimeInSeconds() const {
 	    std::time_t t;
 	    std::time(&t);
 	    return t;
     }
 
-    int elapsedSecondsToNow(std::string s) {
-	    struct tm* t;
-        std::strptime(s.c_str(), "%a, %d %b %Y %T", t);
-	    return currentTimeInSeconds() - std::mktime(t);
+    int elapsedSecondsToNow(std::string s) const {
+	    struct tm t;
+        strptime(s.c_str(), "%a, %d %b %Y %T", &t);
+	    return currentTimeInSeconds() - std::mktime(&t);
     }
-    bool isExpired() {
-        if (header_fields.getField("max-age") != "" || header_fields.getField("s-maxage") != "")
+    bool isExpired() const {
+        if (getField("max-age") != "" || getField("s-maxage") != "")
             return false;
-        std::string response_time = header_fields.getField("DATE");
-        std::string expire_time = header_fields.getField("EXPIRES");
+        std::string response_time = getField("DATE");
+        std::string expire_time = getField("EXPIRES");
         if (expire_time != "") 
             return elapsedSecondsToNow(expire_time) >= 0;
         return elapsedSecondsToNow(response_time) >= HEURISTIC_TIME;
     }
 
-    bool isRevalidatable() {
-        return header_fields.getField("LAST-MODIFIED") != "" || header_fields.getField("ETAG") != "";
+    bool isRevalidatable() const {
+        return getField("LAST-MODIFIED") != "" || getField("ETAG") != "";
     }
-    bool needsRevalidation() {
+    bool needsRevalidation() const {
         if (isAlwaysRevalidate())
             return true;
-        if (header_fields.getField("CACHE-CONTROL") == "")
+        if (getField("CACHE-CONTROL") == "")
             return false;
-        if (header_fields.getField("s-maxage") != "")
-            return elapsedSecondsToNow(getDate()) >= std::stoi(header_fields.getField("s-maxage")) + std::stoi(header_fields.getField("max-stale") + "0") / 10 - std::stoi(header_fields.getField("min-fresh") + "0") / 10;
-        if (header_fields.getField("max-age") != "")
-            return elapsedSecondsToNow(getDate()) >= std::stoi(header_fields.getField("maxage")) + std::stoi(header_fields.getField("max-stale") + "0") / 10 - std::stoi(header_fields.getField("min-fresh") + "0") / 10;
-        if (header_fields.getField("must-revalidate") != "")
+        if (getField("s-maxage") != "")
+            return elapsedSecondsToNow(getDate()) >= std::stoi(getField("s-maxage")) + std::stoi(getField("max-stale") + "0") / 10 - std::stoi(getField("min-fresh") + "0") / 10;
+        if (getField("max-age") != "")
+            return elapsedSecondsToNow(getDate()) >= std::stoi(getField("maxage")) + std::stoi(getField("max-stale") + "0") / 10 - std::stoi(getField("min-fresh") + "0") / 10;
+        if (getField("must-revalidate") != "")
             return true;
-        if (header_fields.getField("proxy-revalidate") != "")
+        if (getField("proxy-revalidate") != "")
             return true;
         return false;
     }
-    std::string getDate() {
-        struct tm* t;
-        std::strptime(header_fields.getField("DATE"), "%a, %d %b %Y %T", t);
-        return std::asctime(t);
+    std::string getDate() const {
+        struct tm t;
+        strptime(getField("DATE").c_str(), "%a, %d %b %Y %T", &t);
+        return std::asctime(&t);
     }
 
     STATUS getStatus() { return status; }

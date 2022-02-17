@@ -13,16 +13,15 @@ public:
 	enum METHOD { GET, POST, CONNECT };
     METHOD method;
     HttpRequest(int unique_id) : unique_id(unique_id) {}
-	HttpResponse handle(const Socket& out) = 0; 
     void setMethod(METHOD method) { this->method = method; }
-    int getUniqueId() { return unique_id; }
-    std::string getHost() { return host; }
-    std::string getPort() { return port; }
-    std::string getUrl() { return url; }
-    std::string getCacheKey() { return getHost() + ":" + getPort() + getUrl(); }
-    std::string getField(const std::string& field) {
+    int getUniqueId() const { return unique_id; }
+    std::string getHost() const { return host; }
+    std::string getPort() const { return port; }
+    std::string getUrl() const { return url; }
+    std::string getCacheKey() const { return getHost() + ":" + getPort() + getUrl(); }
+    std::string getField(const std::string& field) const {
         if (header_fields.count(field))
-            return header_fields[field];
+            return header_fields.at(field);
         return "";
     }
     const std::vector<char>& getRawData() { return raw_data; }
@@ -34,10 +33,10 @@ public:
     void setPort(const std::string& port) { this->port = port; }
     void setUrl(const std::string& url) { this->url = url; }
     METHOD getMethod() { return method; }
-    std::string isCachable() {
-        if (header_fields.getField("no-store") != "")
+    std::string isCachable() const {
+        if (getField("no-store") != "")
             return "";
-        return "request specifies no-cache"
+        return "request specifies no-cache";
     }
     virtual ~HttpRequest() {}
 
@@ -115,15 +114,17 @@ public:
     HttpRequest* get() {
        return request; 
     }
+    /*
     HttpResponse handle(const Socket& out) {
         return request->handle(out);
     }
-    int getUniqueId() { return request->getUniqueId(); }
-    std::string getHost() { return request->getHost(); }
-    std::string getPort() { return request->getPort(); }
-    std::string getUrl() { return request->getUrl(); }
-    std::string getCacheKey() { return request->getCacheKey(); }
-    std::string getField(const std::string& field) { return request->getField(field); }
+    */
+    int getUniqueId() const { return request->getUniqueId(); }
+    std::string getHost() const { return request->getHost(); }
+    std::string getPort() const { return request->getPort(); }
+    std::string getUrl() const { return request->getUrl(); }
+    std::string getCacheKey() const { return request->getCacheKey(); }
+    std::string getField(const std::string& field) const { return request->getField(field); }
     const std::vector<char>& getRawData() const { return request->getRawData(); }
     void appendRawData(const std::string& data) { request->appendRawData(data); }
 
@@ -134,7 +135,7 @@ public:
     void setUrl(const std::string& url) { request->setUrl(url); }
     HttpRequest::METHOD getMethod() { return request->getMethod(); }
 
-    std::string isCachable() { return request->isCachable(); }
+    std::string isCachable() const { return request->isCachable(); }
     ~HttpRequestWrapper() {
         delete request;
     }

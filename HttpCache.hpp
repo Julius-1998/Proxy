@@ -23,7 +23,7 @@ public:
     HttpCache(int max_capacity, int size) : cache(max_capacity, size) { }
 
 
-    std::optional<HttpResponse> get(const HttpRequest& request, const Socket& out) {
+    std::optional<HttpResponse> get(const HttpRequestWrapper& request, Socket& out) {
         auto key = request.getCacheKey();
         auto optional_response = cache.get(key);
         if (!optional_response.has_value()) {
@@ -31,6 +31,7 @@ public:
             // log not in cache 
             return optional_response;
         }
+        auto response = optional_response.value();
         if (response.needsRevalidation() && response.isRevalidatable()) {
             // TODO
             // log needs revalidation
@@ -45,7 +46,7 @@ public:
             } else if (response.getField("STATUS") == "200") {
                 //TODO
                 // log revalidation failed
-                Cache.put(request, response);
+                put(request, response);
                 return {response};
             } else {
                 //TODO
@@ -53,15 +54,16 @@ public:
             }
             
         }
-        if (response.needsRevalidation() && !reponse.isRevalidatable() || response.isExpired()) {
+        if ((response.needsRevalidation() && !response.isRevalidatable()) || response.isExpired()) {
             //TODO
             //log expired
             out.sendRequest(request);
-            HttpResponse response = out.recvResponse();
-            if (response.getField("STATUS") != "200")
+            HttpResponse new_response = out.recvResponse();
+            if (new_response.getField("STATUS") != "200") {
                 //TODO throw ERROR
-            Cache.put(request, response);
-            return {response};
+            }
+            put(request, new_response);
+            return {new_response};
         }
 
         // TODO

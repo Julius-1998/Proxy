@@ -22,7 +22,7 @@ private:
         return std::string(buf);
     }
 
-    void parseCacheControl(const HttpResponse& response) {
+    void parseCacheControl(HttpResponse& response) {
         std::string cc_fields = response.getField("CACHE-CONTROL");
         if (cc_fields == "")
             return;
@@ -42,7 +42,7 @@ private:
         }
     }
 
-    void parseCacheControl(const HttpResponse& request) {
+    void parseCacheControl(HttpRequestWrapper& request) {
         std::string cc_fields = request.getField("CACHE-CONTROL");
         if (cc_fields == "")
             return;
@@ -62,7 +62,7 @@ private:
         }
     }
 
-    std::string toUpper(std::string s) {
+    std::string toUpper(std::string s) const {
         std::transform(s.begin(), s.end(), s.begin(), 
                    [](unsigned char c){ return std::toupper(c); } // correct
                   );
@@ -143,7 +143,7 @@ public:
         this->unique_id = that.unique_id;
         rio_readinitb(&rio, fd);
 		that.fd = -1;
-        that.unique_id = -1
+        that.unique_id = -1;
 	}
 
 	Socket(Socket& that) = delete;

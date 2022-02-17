@@ -16,7 +16,7 @@ public:
         printf("-----------Received Request-----------\n");
         std::cout << request.getRawData().data() << std::endl; 
         printf("-----------End of Request-------------\n");
-        if (request.getField("METHOD") = "CONNECT") {
+        if (request.getField("METHOD") == "CONNECT") {
             HttpResponse response;
             response.appendRawData("HTTP1.1 200 OK\r\n\r\n");
             in.sendResponse(response);
@@ -24,14 +24,14 @@ public:
 			forwarder.forward();
         } else if (request.getField("METHOD") == "GET") {
             auto optional_response = Cache.get(request, out);
-            if (opt_res.has_value()) {
-                in.sendResponse(optional_response.value())
+            if (optional_response.has_value()) {
+                in.sendResponse(optional_response.value());
                 return;
             }
-            in.sendRequest(request);
+            out.sendRequest(request);
             HttpResponse response = out.recvResponse();
             if (response.getField("STATUS") == "200") {
-                Cache.push(request, response);
+                Cache.put(request, response);
             } else {
                 // TODO ERROR
             }

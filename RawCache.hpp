@@ -10,7 +10,7 @@ template<typename K, typename V>
 class RandomEvictCache {
 private:
     std::unordered_map<K,V> mp;
-    int max_capacity;
+    size_t max_capacity;
 public:
     RandomEvictCache(int max_capacity) : mp(), max_capacity(max_capacity) { }
 
