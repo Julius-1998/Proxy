@@ -25,6 +25,7 @@ public:
     void appendRawData(const std::string& data) { for (char c : data) raw_data.push_back(c); }
 
     void appendRawData(const char* data) { while (*data) raw_data.push_back(*data++); }
+    void appendRawData(const char* data, size_t size) { while (size--) raw_data.push_back(*data++); }
     void setField(const std::string& k, const std::string& v) { header_fields[k] = v; }
     void setHost(const std::string& host) { this->host = host; }
     void setPort(const std::string& port) { this->port = port; }
@@ -116,6 +117,7 @@ public:
     void appendRawData(const std::string& data) { request->appendRawData(data); }
 
     void appendRawData(const char* data) { request->appendRawData(data); }
+    void appendRawData(const char* data, size_t size) { request->appendRawData(data, size); }
     void setField(const std::string& k, std::string v) { request->setField(k, v); }
     void setHost(const std::string& host) { request->setHost(host); }
     void setPort(const std::string& port) { request->setPort(port); }

@@ -27,6 +27,7 @@ public:
     const std::vector<char>& getRawData() const { return raw_data; }
     void appendRawData(const std::string& data) { for (char c : data) raw_data.push_back(c); }
     void appendRawData(const char* data) { while (*data) raw_data.push_back(*data++); }
+    void appendRawData(const char* data, size_t size) { while(size--) raw_data.push_back(*data++);}
     void setField(const std::string& k, const std::string& v) { header_fields[k] = v; }
     STATUS getStatus() { return status; }
 
