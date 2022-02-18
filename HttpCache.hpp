@@ -2,6 +2,7 @@
 #define __HTTPCACHE_HPP__
 #include "RawCache.hpp"
 #include <string>
+#include <optional>
 
 class HttpCache {
 private:
@@ -26,23 +27,23 @@ public:
     std::optional<HttpResponse> get(const HttpRequestWrapper& request, Socket& out) {
         auto key = request.getCacheKey();
         auto optional_response = cache.get(key);
+        Logger* logger = Logger::getLogger();
         if (!optional_response.has_value()) {
-            // TODO
-            // log not in cache 
+            logger->logCache(request, "not in cache");
             return optional_response;
         }
         auto response = optional_response.value();
         if (response.needsRevalidation() && response.isRevalidatable()) {
-            // TODO
-            // log needs revalidation
+            logger->logCache(request, "in cache, requires validation");
+            logger->logContactingServer(request);
             HttpRequestWrapper revalidation_request = createRevalidationRequest(request);
             out.sendRequest(revalidation_request);
             HttpResponse response = out.recvResponse();
+            logger->logContactingServer(response);
             if (response.getField("STATUS") == "304") {
                 //TODO
                 //log revalidation succeeded
                 return optional_response;
-                
             } else if (response.getField("STATUS") == "200") {
                 //TODO
                 // log revalidation failed
@@ -57,6 +58,7 @@ public:
         if ((response.needsRevalidation() && !response.isRevalidatable()) || response.isExpired()) {
             //TODO
             //log expired
+            logger->logCache(request, "in cache, but expired at");
             out.sendRequest(request);
             HttpResponse new_response = out.recvResponse();
             if (new_response.getField("STATUS") != "200") {
@@ -68,6 +70,7 @@ public:
 
         // TODO
         // log in cache valid
+       logger->logCache(request, "in cache, valid");
         return optional_response;
     }
 
