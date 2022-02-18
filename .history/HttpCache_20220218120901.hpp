@@ -96,7 +96,7 @@ public:
         }
         if ((response.needsRevalidation() && !response.isRevalidatable()) || response.isExpired())
         {
-            std::string expire_time = response.getExpiringDateString();
+            std::string expire_time = response.getExpireTime()
             logger->logCache(request, "in cache, but expired at" + expire_time);
             out.sendRequest(request);
             HttpResponse new_response = out.recvResponse();
@@ -113,6 +113,8 @@ public:
         logger->logCache(request, "in cache, valid");
         return optional_response;
     }
-};
+}
+}
+;
 
 #endif

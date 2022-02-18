@@ -113,6 +113,6 @@ public:
         logger->logCache(request, "in cache, valid");
         return optional_response;
     }
-};
+}
 
 #endif
