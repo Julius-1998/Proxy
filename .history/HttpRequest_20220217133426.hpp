@@ -49,7 +49,7 @@ public:
         //todo: throw an error here
         return "Invalid";
     }
-    std::string getRequestLine() const { return getMethodString() +" "+ getUrl(); }
+    std::string getRequestLine() const { return getMethodString() + getUrl(); }
     const std::vector<char> &getRawData() { return raw_data; }
     void appendRawData(const std::string &data)
     {

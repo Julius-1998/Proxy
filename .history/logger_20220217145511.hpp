@@ -24,10 +24,6 @@ public:
         return file_location;
     }
     void logRequest(HttpRequestWrapper& request,std::string IpAddress);
-    void logCache(const HttpRequestWrapper& request, std::string state);
-    void logContactingServer(const HttpRequestWrapper& request);
-    void logContactingServer(HttpResponse& response);
-
 };
 Logger * Logger::logger{nullptr};
 std::mutex Logger::logger_lock;
@@ -58,22 +54,16 @@ void Logger::logRequest( HttpRequestWrapper &request, std::string IpAddress){
     log(logString);
 }
 
-void Logger::logCache(const HttpRequestWrapper &request, std::string state){
+void Logger::logCache( HttpRequestWrapper &request, std::string state){
     //state should be the case;
     std::string idString = std::to_string(request.getUniqueId());
     std::string logString = idString + ": " + state; 
     log(logString);
 }
 
-void Logger::logContactingServer(const HttpRequestWrapper &request){
+void Logger::logContactingServer(HttpRequestWrapper &request){
     std::string idString = std::to_string(request.getUniqueId());
     std::string logString = idString + ": " + request.getHost();
-    log(logString);
-}
-
-void Logger::logContactingServer(HttpResponse & response){
-    std::string idString = std::to_string(response.getUniqueId());
-    std::string logString = idString + ": " + response.getHost();
     log(logString);
 }
 #endif

@@ -10,12 +10,12 @@ private:
 	Socket out;
 	HttpRequestWrapper request;
 public:
-	Task(Socket&& in, Socket&& out, HttpRequestWrapper&& request) : in(std::move(in)), out(std::move(out)), request(std::move(request)) {
-       
-    }
+	Task(Socket&& in, Socket&& out, HttpRequestWrapper&& request) : in(std::move(in)), out(std::move(out)), request(std::move(request)) {}
 
 	void execute() {
         printf("-----------Received Request-----------\n");
+        std::string test = in.getIpAddress();
+        std::cout << in.getIpAddress()<<std::endl;
         std::cout << request.getRawData().data() << std::endl; 
         printf("-----------End of Request-------------\n");
         if (request.getField("METHOD") == "CONNECT") {

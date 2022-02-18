@@ -90,7 +90,7 @@ private:
                 sscanf(value, "%[^:]:%s", host, port);
                 request.setHost(std::string(host));
                 if (strlen(port) == 0)
-                    request.setPort("80");
+                    // request.setPort("80");
                 else
                     request.setPort(std::string(port));
             }

@@ -49,7 +49,7 @@ public:
         //todo: throw an error here
         return "Invalid";
     }
-    std::string getRequestLine() const { return getMethodString() +" "+ getUrl(); }
+    std::string getRequestLine() const { return getMethodString() + getHost() + ":" + getPort() + getUrl(); }
     const std::vector<char> &getRawData() { return raw_data; }
     void appendRawData(const std::string &data)
     {
@@ -179,6 +179,7 @@ public:
     void setHost(const std::string &host) { request->setHost(host); }
     void setPort(const std::string &port) { request->setPort(port); }
     void setUrl(const std::string &url) { request->setUrl(url); }
+    std::string getRequestLine(){return request->getRequestLine();}
     HttpRequest::METHOD getMethod() { return request->getMethod(); }
 
     std::string isCachable() const { return request->isCachable(); }

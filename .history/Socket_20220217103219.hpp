@@ -6,7 +6,7 @@
 
 #include <algorithm>
 #include <sstream>
-#include "logger.hpp"
+
 class Socket
 {
 private:

@@ -6,7 +6,7 @@
 
 #include <algorithm>
 #include <sstream>
-#include "logger.hpp"
+
 class Socket
 {
 private:
@@ -44,7 +44,13 @@ private:
         }
     }
 
-
+    void getIpAddress(){
+        sockaddr_in addr;
+        socklen_t addr_size = sizeof(sockaddr_in);
+        int res = getpeername(fd, (struct sockaddr *)&addr, &addr_size);
+        char *clientip = new char[20];
+        strcpy(clientip, inet_ntoa(addr.sin_addr));
+    }
     void parseCacheControl(HttpRequestWrapper& request) {
         std::string cc_fields = request.getField("CACHE-CONTROL");
         if (cc_fields == "")
@@ -240,9 +246,6 @@ public:
         parseRequestHeader(request);
         parsePayload(request);
         parseCacheControl(request);
-        Logger* logger = Logger::getLogger();
-        std::string ipAddress = getIpAddress();
-        logger->logRequest(request,ipAddress);
         return request;
     }
 
@@ -261,7 +264,6 @@ public:
         parseResponseHeader(response);
         parsePayload(response);
         parseCacheControl(response);
-        
         return response;
     }
 
@@ -289,17 +291,6 @@ public:
     {
         if (fd >= 0)
             close(fd);
-    }
-    
-    std::string getIpAddress(){
-        sockaddr_in addr;
-        socklen_t addr_size = sizeof(sockaddr_in);
-        getpeername(fd, (struct sockaddr *)&addr, &addr_size);
-        char *clientip = new char[20];
-        strcpy(clientip, inet_ntoa(addr.sin_addr));
-        std::string address(clientip);
-        return address;
-
     }
 };
 

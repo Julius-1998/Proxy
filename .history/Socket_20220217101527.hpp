@@ -6,7 +6,7 @@
 
 #include <algorithm>
 #include <sstream>
-#include "logger.hpp"
+
 class Socket
 {
 private:
@@ -242,7 +242,7 @@ public:
         parseCacheControl(request);
         Logger* logger = Logger::getLogger();
         std::string ipAddress = getIpAddress();
-        logger->logRequest(request,ipAddress);
+        logger.logRequest(request,fd);
         return request;
     }
 

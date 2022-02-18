@@ -46,10 +46,8 @@ public:
         {
             return "CONNECT";
         }
-        //todo: throw an error here
-        return "Invalid";
     }
-    std::string getRequestLine() const { return getMethodString() +" "+ getUrl(); }
+    std::string getRequestLine() const { return getMethodString() + getHost() + ":" + getPort() + getUrl(); }
     const std::vector<char> &getRawData() { return raw_data; }
     void appendRawData(const std::string &data)
     {
