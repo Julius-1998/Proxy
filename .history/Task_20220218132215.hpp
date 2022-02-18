@@ -35,6 +35,7 @@ public:
             auto optional_response = Cache.get(request, out);
             if (optional_response.has_value())
             {
+                logger
                 in.sendResponse(optional_response.value());
                 return;
             }

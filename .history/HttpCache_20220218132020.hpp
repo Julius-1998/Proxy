@@ -36,6 +36,14 @@ public:
             logger->logCache(request,"not cacacheable because "+ request_cachable_msg);
             return;
         }
+        auto response_cachable_msg = response.isCachable();
+        if (response_cachable_msg != "")
+        {
+            // TODO log
+            //
+            //
+            return;
+        }
         cache.put(request.getCacheKey(), response);
         if (response.isAlwaysRevalidate())
         {

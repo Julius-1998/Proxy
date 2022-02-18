@@ -27,13 +27,19 @@ public:
 
     void put(const HttpRequestWrapper &request, const HttpResponse &response)
     {
-        Logger *logger = Logger::getLogger();
-        std::string request_cachable_msg = request.isCachable();
+        auto request_cachable_msg = request.isCachable();
         if (request_cachable_msg != "")
         {
             // TODO
             // log(error_msg) no-store
-            logger->logCache(request,"not cacacheable because "+ request_cachable_msg);
+            return;
+        }
+        auto response_cachable_msg = response.isCachable();
+        if (response_cachable_msg != "")
+        {
+            // TODO log
+            //
+            //
             return;
         }
         cache.put(request.getCacheKey(), response);
@@ -41,16 +47,14 @@ public:
         {
             // TODO
             // log in cache but need revalidate
-            logger->logCache(request,"cached,but requires re-validation");
         }
         else
         {
             // TODO
             // log cached expires at XXX
             // reponse.getExpiringDateString();
-            logger->logCache(request, "cached, expires at " + response.getExpiringDateString());
         }
-    };
+    }
 
     std::optional<HttpResponse> get(const HttpRequestWrapper &request, Socket &out)
     {
@@ -70,7 +74,6 @@ public:
             HttpRequestWrapper revalidation_request = createRevalidationRequest(request);
             out.sendRequest(revalidation_request);
             HttpResponse response = out.recvResponse();
-            //Contacting the server to get response
             logger->logContactingServerResponse(request, response);
             if (response.getField("STATUS") == "304")
             {
@@ -109,7 +112,7 @@ public:
         // log in cache valid
         logger->logCache(request, "in cache, valid");
         return optional_response;
-    };
+    }
 };
 
 #endif
