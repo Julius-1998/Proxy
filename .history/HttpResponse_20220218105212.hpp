@@ -6,8 +6,6 @@
 #include <utility>
 #include <iostream>
 #include <ctime>
-#include <sstream>
-#include <iostream>
 #define HEURISTIC_TIME 86400
 
 extern "C" {
@@ -133,18 +131,8 @@ public:
     }
 
     STATUS getStatus() { return status; }
-    std::string getStatusString() const {
-        if(status == STATUS::OK) return "OK";
-        if(status == STATUS::INTERNAL_ERROR) return "INTERNAL_ERROR";
-        if(status == STATUS::NOT_FOUND) return "NOT_FOUND";
-        if(status == STATUS::REDIRECT) return "REDIRECT";
-    }
     std::string getResponseLine() const{
-        std::string str(raw_data.begin(),raw_data.end());
-        std::stringstream ss(str);
-        std::string firstLine;
-        std::getline(ss,firstLine,'\r');
-        return firstLine;
+        return getStatus;
     }
 
     HttpResponse(HttpResponse&& that) {

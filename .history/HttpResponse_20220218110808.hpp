@@ -7,7 +7,6 @@
 #include <iostream>
 #include <ctime>
 #include <sstream>
-#include <iostream>
 #define HEURISTIC_TIME 86400
 
 extern "C" {
@@ -143,7 +142,7 @@ public:
         std::string str(raw_data.begin(),raw_data.end());
         std::stringstream ss(str);
         std::string firstLine;
-        std::getline(ss,firstLine,'\r');
+        std::getline(firstLine,ss,'\r');
         return firstLine;
     }
 

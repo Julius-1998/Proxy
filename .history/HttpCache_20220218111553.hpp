@@ -96,8 +96,7 @@ public:
         }
         if ((response.needsRevalidation() && !response.isRevalidatable()) || response.isExpired())
         {
-            std::string expire_time = response.getExpireTime()
-            logger->logCache(request, "in cache, but expired at" + );
+            logger->logCache(request, "in cache, but expired at");
             out.sendRequest(request);
             HttpResponse new_response = out.recvResponse();
             if (new_response.getField("STATUS") != "200")

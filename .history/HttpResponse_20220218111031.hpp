@@ -143,7 +143,7 @@ public:
         std::string str(raw_data.begin(),raw_data.end());
         std::stringstream ss(str);
         std::string firstLine;
-        std::getline(ss,firstLine,'\r');
+        std::getline(ss,firstLine);
         return firstLine;
     }
 

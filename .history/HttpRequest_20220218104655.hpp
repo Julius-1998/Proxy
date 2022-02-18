@@ -126,6 +126,21 @@ public:
     {
         request = new HttpRequest(unique_id);
     }
+    /*
+    HttpRequestWrapper(const std::string& method, int unique_id) {
+
+        if (method == "GET") {
+            request = new GetRequest();
+        } else if (method == "POST") {
+            request = new PostRequest();
+        } else if (method == "CONNECT") {
+            request = new ConnectRequest();
+        } else {
+            //TODO not implemented error
+            request = nullptr;
+        }
+    }*/
+
     HttpRequestWrapper &operator=(HttpRequestWrapper &&that)
     {
         request = that.request;
@@ -145,13 +160,21 @@ public:
     {
         return request;
     }
+    const HttpRequest *get()
+    {
+        return request;
+    }
+    /*
+    HttpResponse handle(const Socket& out) {
+        return request->handle(out);
+    }
+    */
     int getUniqueId() const { return request->getUniqueId(); }
     std::string getHost() const { return request->getHost(); }
     std::string getPort() const { return request->getPort(); }
     std::string getUrl() const { return request->getUrl(); }
     std::string getCacheKey() const { return request->getCacheKey(); }
     std::string getField(const std::string &field) const { return request->getField(field); }
-    std::string getRequestLine() const {return request->getRequestLine();}
     const std::vector<char> &getRawData() const { return request->getRawData(); }
     void appendRawData(const std::string &data) { request->appendRawData(data); }
 

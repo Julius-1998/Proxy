@@ -25,8 +25,9 @@ public:
     }
     void logRequest(HttpRequestWrapper& request,std::string IpAddress);
     void logCache(const HttpRequestWrapper& request, std::string state);
-    void logContactingServerRequest(const HttpRequestWrapper& request);
-    void logContactingServerResponse(const HttpRequestWrapper &request,const HttpResponse& response);
+    void logContactingServer(const HttpRequestWrapper& request);
+    void logContactingServer(HttpRequestWrapper& request);
+
 };
 Logger * Logger::logger{nullptr};
 std::mutex Logger::logger_lock;
@@ -64,16 +65,15 @@ void Logger::logCache(const HttpRequestWrapper &request, std::string state){
     log(logString);
 }
 
-void Logger::logContactingServerRequest(const HttpRequestWrapper &request){
+void Logger::logContactingServer(const HttpRequestWrapper &request){
     std::string idString = std::to_string(request.getUniqueId());
-    std::string logString = idString + ": Requesting" + request.getRequestLine()+" from "+ request.getHost();
+    std::string logString = idString + ": " + request.getHost();
     log(logString);
 }
 
-void Logger::logContactingServerResponse(const HttpRequestWrapper &request,const HttpResponse& response){
+void Logger::logContactingServer(HttpRequestWrapper & request){
     std::string idString = std::to_string(request.getUniqueId());
-    std::string logString = idString + ": Received" + response.getResponseLine()+ " from " +request.getHost();
+    std::string logString = idString + ": " + request.getHost();
     log(logString);
 }
-
 #endif
