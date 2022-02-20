@@ -73,7 +73,7 @@ void Logger::logContactingServerRequest(const HttpRequestWrapper &request){
 void Logger::logContactingServerResponse(const HttpRequestWrapper &request,const HttpResponse& response){
     std::string idString = std::to_string(request.getUniqueId());
     std::string logString = idString + ": Received" + response.getResponseLine()+ " from " +request.getHost();
-    log(logString)
+    log(logString);
 }
 
 #endif

@@ -118,3 +118,145 @@
 
 6: GET contile.services.mozilla.com:443 from 174.109.88.133 @ Fri Feb 18 13:18:27 2022
 
+1: GET http://go.com/ from 24.163.91.176 @ Sun Feb 20 18:04:58 2022
+
+1: not in cache
+1: RequestingGET http://go.com/ from go.com
+1: ReceivedHTTP/1.1 200 OK from go.com
+1: not cacacheable because request specifies no-cache
+4: GET http://global.go.com/stat/dolWebAnalytics.js from 24.163.91.176 @ Sun Feb 20 18:04:58 2022
+
+4: not in cache
+4: RequestingGET http://global.go.com/stat/dolWebAnalytics.js from global.go.com
+4: ReceivedHTTP/1.1 200 OK from global.go.com
+4: not cacacheable because request specifies no-cache
+11: GET http://global.go.com/stat/dolWebAnalytics.js from 24.163.91.176 @ Sun Feb 20 18:04:59 2022
+
+11: not in cache
+11: RequestingGET http://global.go.com/stat/dolWebAnalytics.js from global.go.com
+11: ReceivedHTTP/1.1 200 OK from global.go.com
+11: not cacacheable because request specifies no-cache
+10: GET http://a.dilcdn.com/g/domains/go.com.js from 24.163.91.176 @ Sun Feb 20 18:04:59 2022
+
+12: GET http://www.googletagservices.com/tag/js/gpt.js from 24.163.91.176 @ Sun Feb 20 18:04:59 2022
+
+12: not in cache
+12: RequestingGET http://www.googletagservices.com/tag/js/gpt.js from www.googletagservices.com
+10: not in cache
+10: RequestingGET http://a.dilcdn.com/g/domains/go.com.js from a.dilcdn.com
+10: ReceivedHTTP/1.1 304 Not Modified from a.dilcdn.com
+12: ReceivedHTTP/1.1 200 OK from www.googletagservices.com
+12: not cacacheable because request specifies no-cache
+13: GET http://b.scorecardresearch.com/b?c1=2&c2=15592703&&ns__t=1645380300782&ns_c=UTF-8&c8=Go.com%20%7C%20The%20Walt%20Disney%20Company%C2%A0&c7=http%3A%2F%2Fgo.com%2F&c9= from 24.163.91.176 @ Sun Feb 20 18:05:00 2022
+
+14: GET http://b.scorecardresearch.com/c2/15592703/cs.js from 24.163.91.176 @ Sun Feb 20 18:05:00 2022
+
+13: not in cache
+13: RequestingGET http://b.scorecardresearch.com/b?c1=2&c2=15592703&&ns__t=1645380300782&ns_c=UTF-8&c8=Go.com%20%7C%20The%20Walt%20Disney%20Company%C2%A0&c7=http%3A%2F%2Fgo.com%2F&c9= from b.scorecardresearch.com
+14: not in cache
+14: RequestingGET http://b.scorecardresearch.com/c2/15592703/cs.js from b.scorecardresearch.com
+15: GET http://ocsp.pki.goog/gts1c3/MFcwVaADAgEAME4wTDBKMAkGBSsOAwIaBQAEFMcueYrd%2F2E0s7rtR0K4u8bAJAdjBBSKdH%2Bvhc3ulc09nNDiRhTzcTUdJwIRAOOXnE8odUG5CgAAAAEz%2BOg%3D from 24.163.91.176 @ Sun Feb 20 18:05:00 2022
+
+15: not in cache
+15: RequestingGET http://ocsp.pki.goog/gts1c3/MFcwVaADAgEAME4wTDBKMAkGBSsOAwIaBQAEFMcueYrd%2F2E0s7rtR0K4u8bAJAdjBBSKdH%2Bvhc3ulc09nNDiRhTzcTUdJwIRAOOXnE8odUG5CgAAAAEz%2BOg%3D from ocsp.pki.goog
+16: GET http://secure-us.imrworldwide.com/cgi-bin/m?ci=us-505916h&cg=0&cc=1&si=http%3A//go.com/&rp=&ts=compact&rnd=1645380300858 from 24.163.91.176 @ Sun Feb 20 18:05:00 2022
+
+17: GET http://tag.researchnow.com/t/beacon?pr=2701&si=go.com&eid=dfam:goc:homepage:homepage&ca=&adn=3&tt=3 from 24.163.91.176 @ Sun Feb 20 18:05:00 2022
+
+18: GET http://w88.go.com/b/ss/wdgdsec,wdgdolgoc,wdgdolfamsec/1/JS-2.10.0/s04780669231738?AQB=1&ndh=1&pf=1&t=20%2F1%2F2022%2013%3A5%3A0%200%20300&fid=2D161724CF2A3AC2-3D229F1AB9045C1D&ce=UTF-8&ns=dol&cdp=2&pageName=dfam%3Agoc%3Ahomepage%3Ahomepage&g=http%3A%2F%2Fgo.com%2F&cc=USD&c1=goc&h1=homepage&v10=goc&c12=na&c14=dfam&c28=http%3A%2F%2Fgo.com%2F&c34=goc&c37=flash_version%3A-1&c39=dfam%3Agoc%3Ahomepage%3Ahomepage&v40=dfam%3Agoc%3Ahomepage%3Ahomepage&c47=dfam%3Agoc%3Ahomepage%3Ahomepage&c49=cto-1645380300452-8017868546903&c61=go.com&v61=go.com&c62=go.com&v62=go.com&c63=go.com&v63=go.com&c64=homepage&v64=homepage&v65=http%3A%2F%2Fgo.com%2F&c66=%2F21783347309%2Fgoc%2Fhomepage&v66=%2F21783347309%2Fgoc%2Fhomepage&c67=924x545&c68=na&v68=na&c69=trackpage&c70=gocom%2Cmatterhorn&c72=4.5.66&c74=1644965447030-4676153387451&c75=1645380300780-7562846788437&v76=not-detected&s=1440x900&c=30&j=1.6&v=N&k=Y&bw=1440&bh=718&AQE=1 from 24.163.91.176 @ Sun Feb 20 18:05:00 2022
+
+14: ReceivedHTTP/1.1 302 Found from b.scorecardresearch.com
+13: ReceivedHTTP/1.1 302 Found from b.scorecardresearch.com
+15: ReceivedHTTP/1.1 200 OK from ocsp.pki.goog
+15: not cacacheable because request specifies no-cache
+16: not in cache
+16: RequestingGET http://secure-us.imrworldwide.com/cgi-bin/m?ci=us-505916h&cg=0&cc=1&si=http%3A//go.com/&rp=&ts=compact&rnd=1645380300858 from secure-us.imrworldwide.com
+17: not in cache
+17: RequestingGET http://tag.researchnow.com/t/beacon?pr=2701&si=go.com&eid=dfam:goc:homepage:homepage&ca=&adn=3&tt=3 from tag.researchnow.com
+16: ReceivedHTTP/1.1 301 Moved Permanently from secure-us.imrworldwide.com
+17: ReceivedHTTP/1.1 200 OK from tag.researchnow.com
+17: not cacacheable because request specifies no-cache
+18: not in cache
+18: RequestingGET http://w88.go.com/b/ss/wdgdsec,wdgdolgoc,wdgdolfamsec/1/JS-2.10.0/s04780669231738?AQB=1&ndh=1&pf=1&t=20%2F1%2F2022%2013%3A5%3A0%200%20300&fid=2D161724CF2A3AC2-3D229F1AB9045C1D&ce=UTF-8&ns=dol&cdp=2&pageName=dfam%3Agoc%3Ahomepage%3Ahomepage&g=http%3A%2F%2Fgo.com%2F&cc=USD&c1=goc&h1=homepage&v10=goc&c12=na&c14=dfam&c28=http%3A%2F%2Fgo.com%2F&c34=goc&c37=flash_version%3A-1&c39=dfam%3Agoc%3Ahomepage%3Ahomepage&v40=dfam%3Agoc%3Ahomepage%3Ahomepage&c47=dfam%3Agoc%3Ahomepage%3Ahomepage&c49=cto-1645380300452-8017868546903&c61=go.com&v61=go.com&c62=go.com&v62=go.com&c63=go.com&v63=go.com&c64=homepage&v64=homepage&v65=http%3A%2F%2Fgo.com%2F&c66=%2F21783347309%2Fgoc%2Fhomepage&v66=%2F21783347309%2Fgoc%2Fhomepage&c67=924x545&c68=na&v68=na&c69=trackpage&c70=gocom%2Cmatterhorn&c72=4.5.66&c74=1644965447030-4676153387451&c75=1645380300780-7562846788437&v76=not-detected&s=1440x900&c=30&j=1.6&v=N&k=Y&bw=1440&bh=718&AQE=1 from w88.go.com
+18: ReceivedHTTP/1.1 302 Found from w88.go.com
+19: GET http://b.scorecardresearch.com/b2?c1=2&c2=15592703&ns__t=1645380300782&ns_c=UTF-8&c8=Go.com%20%7C%20The%20Walt%20Disney%20Company%C2%A0&c7=http%3A%2F%2Fgo.com%2F&c9= from 24.163.91.176 @ Sun Feb 20 18:05:01 2022
+
+19: not in cache
+19: RequestingGET http://b.scorecardresearch.com/b2?c1=2&c2=15592703&ns__t=1645380300782&ns_c=UTF-8&c8=Go.com%20%7C%20The%20Walt%20Disney%20Company%C2%A0&c7=http%3A%2F%2Fgo.com%2F&c9= from b.scorecardresearch.com
+20: GET http://b.scorecardresearch.com/r?c2=6035140&d.c=gif&d.o=wdgdolfamsec&d.x=2098512501&d.t=page&d.u=http%3A%2F%2Fgo.com%2F from 24.163.91.176 @ Sun Feb 20 18:05:01 2022
+
+20: not in cache
+20: RequestingGET http://b.scorecardresearch.com/r?c2=6035140&d.c=gif&d.o=wdgdolfamsec&d.x=2098512501&d.t=page&d.u=http%3A%2F%2Fgo.com%2F from b.scorecardresearch.com
+19: ReceivedHTTP/1.1 204 No Content from b.scorecardresearch.com
+20: ReceivedHTTP/1.1 302 Found from b.scorecardresearch.com
+21: GET http://b.scorecardresearch.com/r2?c2=6035140&d.c=gif&d.o=wdgdolfamsec&d.x=2098512501&d.t=page&d.u=http%3A%2F%2Fgo.com%2F from 24.163.91.176 @ Sun Feb 20 18:05:01 2022
+
+21: not in cache
+21: RequestingGET http://b.scorecardresearch.com/r2?c2=6035140&d.c=gif&d.o=wdgdolfamsec&d.x=2098512501&d.t=page&d.u=http%3A%2F%2Fgo.com%2F from b.scorecardresearch.com
+21: ReceivedHTTP/1.1 200 OK from b.scorecardresearch.com
+21: not cacacheable because request specifies no-cache
+3: GET http://go.com/ from 24.163.91.176 @ Sun Feb 20 18:05:04 2022
+
+3: not in cache
+3: RequestingGET http://go.com/ from go.com
+3: ReceivedHTTP/1.1 304 Not Modified from go.com
+23: GET http://global.go.com/stat/dolWebAnalytics.js from 24.163.91.176 @ Sun Feb 20 18:05:04 2022
+
+23: not in cache
+23: RequestingGET http://global.go.com/stat/dolWebAnalytics.js from global.go.com
+23: ReceivedHTTP/1.1 200 OK from global.go.com
+23: not cacacheable because request specifies no-cache
+25: GET http://b.scorecardresearch.com/c2/15592703/cs.js from 24.163.91.176 @ Sun Feb 20 18:05:04 2022
+
+26: GET http://b.scorecardresearch.com/b?c1=2&c2=15592703&&ns__t=1645380304554&ns_c=UTF-8&c8=Go.com%20%7C%20The%20Walt%20Disney%20Company%C2%A0&c7=http%3A%2F%2Fgo.com%2F&c9= from 24.163.91.176 @ Sun Feb 20 18:05:04 2022
+
+26: not in cache
+26: RequestingGET http://b.scorecardresearch.com/b?c1=2&c2=15592703&&ns__t=1645380304554&ns_c=UTF-8&c8=Go.com%20%7C%20The%20Walt%20Disney%20Company%C2%A0&c7=http%3A%2F%2Fgo.com%2F&c9= from b.scorecardresearch.com
+25: not in cache
+25: RequestingGET http://b.scorecardresearch.com/c2/15592703/cs.js from b.scorecardresearch.com
+25: ReceivedHTTP/1.1 302 Found from b.scorecardresearch.com
+26: ReceivedHTTP/1.1 302 Found from b.scorecardresearch.com
+27: GET http://tag.researchnow.com/t/beacon?pr=2701&si=go.com&eid=dfam:goc:homepage:homepage&ca=&adn=3&tt=3 from 24.163.91.176 @ Sun Feb 20 18:05:04 2022
+
+27: not in cache
+27: RequestingGET http://tag.researchnow.com/t/beacon?pr=2701&si=go.com&eid=dfam:goc:homepage:homepage&ca=&adn=3&tt=3 from tag.researchnow.com
+27: ReceivedHTTP/1.1 200 OK from tag.researchnow.com
+27: not cacacheable because request specifies no-cache
+28: GET http://secure-us.imrworldwide.com/cgi-bin/m?ci=us-505916h&cg=0&cc=1&si=http%3A//go.com/&rp=&ts=compact&rnd=1645380304653 from 24.163.91.176 @ Sun Feb 20 18:05:04 2022
+
+29: GET http://w88.go.com/b/ss/wdgdsec,wdgdolgoc,wdgdolfamsec/1/JS-2.10.0/s02930045075975?AQB=1&ndh=1&pf=1&t=20%2F1%2F2022%2013%3A5%3A4%200%20300&fid=2D161724CF2A3AC2-3D229F1AB9045C1D&ce=UTF-8&ns=dol&cdp=2&pageName=dfam%3Agoc%3Ahomepage%3Ahomepage&g=http%3A%2F%2Fgo.com%2F&cc=USD&c1=goc&h1=homepage&v10=goc&c12=dfam%3Agoc%3Ahomepage%3Ahomepage&c14=dfam&c28=http%3A%2F%2Fgo.com%2F&c34=goc&c37=flash_version%3A-1&c39=dfam%3Agoc%3Ahomepage%3Ahomepage&v40=dfam%3Agoc%3Ahomepage%3Ahomepage&c47=dfam%3Agoc%3Ahomepage%3Ahomepage&c49=cto-1645380304516-7174788606103&c61=go.com&v61=go.com&c62=go.com&v62=go.com&c63=go.com&v63=go.com&c64=homepage&v64=homepage&v65=http%3A%2F%2Fgo.com%2F&c66=%2F21783347309%2Fgoc%2Fhomepage&v66=%2F21783347309%2Fgoc%2Fhomepage&c67=924x545&c68=na&v68=na&c69=trackpage&c70=gocom%2Cmatterhorn&c72=4.5.66&c74=1644965447030-4676153387451&c75=1645380300780-7562846788437&v76=not-detected&s=1440x900&c=30&j=1.6&v=N&k=Y&bw=1440&bh=718&AQE=1 from 24.163.91.176 @ Sun Feb 20 18:05:04 2022
+
+28: not in cache
+28: RequestingGET http://secure-us.imrworldwide.com/cgi-bin/m?ci=us-505916h&cg=0&cc=1&si=http%3A//go.com/&rp=&ts=compact&rnd=1645380304653 from secure-us.imrworldwide.com
+29: not in cache
+29: RequestingGET http://w88.go.com/b/ss/wdgdsec,wdgdolgoc,wdgdolfamsec/1/JS-2.10.0/s02930045075975?AQB=1&ndh=1&pf=1&t=20%2F1%2F2022%2013%3A5%3A4%200%20300&fid=2D161724CF2A3AC2-3D229F1AB9045C1D&ce=UTF-8&ns=dol&cdp=2&pageName=dfam%3Agoc%3Ahomepage%3Ahomepage&g=http%3A%2F%2Fgo.com%2F&cc=USD&c1=goc&h1=homepage&v10=goc&c12=dfam%3Agoc%3Ahomepage%3Ahomepage&c14=dfam&c28=http%3A%2F%2Fgo.com%2F&c34=goc&c37=flash_version%3A-1&c39=dfam%3Agoc%3Ahomepage%3Ahomepage&v40=dfam%3Agoc%3Ahomepage%3Ahomepage&c47=dfam%3Agoc%3Ahomepage%3Ahomepage&c49=cto-1645380304516-7174788606103&c61=go.com&v61=go.com&c62=go.com&v62=go.com&c63=go.com&v63=go.com&c64=homepage&v64=homepage&v65=http%3A%2F%2Fgo.com%2F&c66=%2F21783347309%2Fgoc%2Fhomepage&v66=%2F21783347309%2Fgoc%2Fhomepage&c67=924x545&c68=na&v68=na&c69=trackpage&c70=gocom%2Cmatterhorn&c72=4.5.66&c74=1644965447030-4676153387451&c75=1645380300780-7562846788437&v76=not-detected&s=1440x900&c=30&j=1.6&v=N&k=Y&bw=1440&bh=718&AQE=1 from w88.go.com
+28: ReceivedHTTP/1.1 301 Moved Permanently from secure-us.imrworldwide.com
+29: ReceivedHTTP/1.1 302 Found from w88.go.com
+30: GET http://b.scorecardresearch.com/b2?c1=2&c2=15592703&ns__t=1645380304554&ns_c=UTF-8&c8=Go.com%20%7C%20The%20Walt%20Disney%20Company%C2%A0&c7=http%3A%2F%2Fgo.com%2F&c9= from 24.163.91.176 @ Sun Feb 20 18:05:04 2022
+
+30: not in cache
+30: RequestingGET http://b.scorecardresearch.com/b2?c1=2&c2=15592703&ns__t=1645380304554&ns_c=UTF-8&c8=Go.com%20%7C%20The%20Walt%20Disney%20Company%C2%A0&c7=http%3A%2F%2Fgo.com%2F&c9= from b.scorecardresearch.com
+30: ReceivedHTTP/1.1 204 No Content from b.scorecardresearch.com
+31: GET http://b.scorecardresearch.com/r?c2=6035140&d.c=gif&d.o=wdgdolfamsec&d.x=4919791852&d.t=page&d.u=http%3A%2F%2Fgo.com%2F from 24.163.91.176 @ Sun Feb 20 18:05:04 2022
+
+31: not in cache
+31: RequestingGET http://b.scorecardresearch.com/r?c2=6035140&d.c=gif&d.o=wdgdolfamsec&d.x=4919791852&d.t=page&d.u=http%3A%2F%2Fgo.com%2F from b.scorecardresearch.com
+31: ReceivedHTTP/1.1 302 Found from b.scorecardresearch.com
+32: GET http://b.scorecardresearch.com/r2?c2=6035140&d.c=gif&d.o=wdgdolfamsec&d.x=4919791852&d.t=page&d.u=http%3A%2F%2Fgo.com%2F from 24.163.91.176 @ Sun Feb 20 18:05:05 2022
+
+32: not in cache
+32: RequestingGET http://b.scorecardresearch.com/r2?c2=6035140&d.c=gif&d.o=wdgdolfamsec&d.x=4919791852&d.t=page&d.u=http%3A%2F%2Fgo.com%2F from b.scorecardresearch.com
+32: ReceivedHTTP/1.1 200 OK from b.scorecardresearch.com
+32: not cacacheable because request specifies no-cache
+1: CONNECT p62-caldav.icloud.com:443 from 24.163.91.176 @ Sun Feb 20 18:06:48 2022
+
+2: CONNECT www.google.com:443 from 24.163.91.176 @ Sun Feb 20 18:06:49 2022
+
+3: CONNECT www.gstatic.com:443 from 24.163.91.176 @ Sun Feb 20 18:06:51 2022
+
+4: CONNECT aa.google.com:443 from 24.163.91.176 @ Sun Feb 20 18:06:51 2022
+
+5: CONNECT play.google.com:443 from 24.163.91.176 @ Sun Feb 20 18:06:51 2022
+
+6: CONNECT adservice.google.com:443 from 24.163.91.176 @ Sun Feb 20 18:06:51 2022
+
