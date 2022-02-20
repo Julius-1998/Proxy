@@ -34,6 +34,8 @@ public:
     }
     std::string getMethodString() const
     {
+        return getField("METHOD");
+        /*
         if (method == GET)
         {
             return "GET";
@@ -48,6 +50,7 @@ public:
         }
         //todo: throw an error here
         return "Invalid";
+        */
     }
     std::string getRequestLine() const { return getMethodString() +" "+ getUrl(); }
     
