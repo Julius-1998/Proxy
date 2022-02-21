@@ -128,21 +128,20 @@ private:
                 total -= cnt;
             }
         }
-        else if (transfer_encoding_str != "")
+        else if (transfer_encoding_str.find("chunked") != std::string::npos)
         {
             while (1)
             {
-                size_t cnt = rio_readlineb(&rio, buf, (size_t)MAX_READ);
-                if (cnt == 2)
-                {
-                    if (buf[0] == '\r' && buf[1] == '\n')
-                    {
-                        request.appendRawData(buf);
-                        return;
-                    }
+                std::string s = readLine();
+                request.appendRawData(s);
+                if (s == "0\r\n") {
+                    request.appendRawData(readLine());
+                    return;
                 }
-                request.appendRawData(buf);
-                memset(buf, 0, MAX_READ + 1);
+                s.pop_back(); s.pop_back();
+                size_t cnt = rio_readnb(&rio, buf, std::stoi(s));
+                request.appendRawData(buf, cnt);
+                request.appendRawData(readLine());
             }
             return;
         }
@@ -178,30 +177,18 @@ private:
             }
             return;
         }
-        else if (transfer_encoding_str != "")
+        else if (transfer_encoding_str.find("chunked") != std::string::npos)
         {
-            std::stringstream ss(transfer_encoding_str);
-            std::string s;
-            std::vector<std::string> encodings;
-            while (std::getline(ss, s, ','))
-            {
-                encodings.push_back(s);
+            std::string s = readLine();
+            response.appendRawData(s);
+            if (s == "0\r\n") {
+                response.appendRawData(readLine());
+                return;
             }
-            while (1)
-            {
-                size_t cnt = rio_readlineb(&rio, buf, (size_t)MAX_READ);
-                if (cnt == 2)
-                {
-                    if (buf[0] == '\r' && buf[1] == '\n')
-                    {
-                        response.appendRawData(buf);
-                        return;
-                    }
-                }
-                response.appendRawData(buf);
-                memset(buf, 0, MAX_READ + 1);
-            }
-            return;
+            s.pop_back(); s.pop_back();
+            size_t cnt = rio_readnb(&rio, buf, std::stoi(s));
+            response.appendRawData(buf, cnt);
+            response.appendRawData(readLine());
         }
         // TODO error handling
     }
