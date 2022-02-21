@@ -139,7 +139,7 @@ private:
                     return;
                 }
                 s.pop_back(); s.pop_back();
-                size_t cnt = rio_readnb(&rio, buf, std::stoi(s));
+                size_t cnt = rio_readnb(&rio, buf, std::stoi(s, 0, 16));
                 request.appendRawData(buf, cnt);
                 request.appendRawData(readLine());
             }
@@ -179,6 +179,7 @@ private:
         }
         else if (transfer_encoding_str.find("chunked") != std::string::npos)
         {
+            while (1) {
             std::string s = readLine();
             response.appendRawData(s);
             if (s == "0\r\n") {
@@ -186,9 +187,10 @@ private:
                 return;
             }
             s.pop_back(); s.pop_back();
-            size_t cnt = rio_readnb(&rio, buf, std::stoi(s));
+            size_t cnt = rio_readnb(&rio, buf, std::stoi(s, 0, 16));
             response.appendRawData(buf, cnt);
             response.appendRawData(readLine());
+            }
         }
         // TODO error handling
     }
