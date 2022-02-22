@@ -41,7 +41,7 @@ public:
         {
             // TODO:
             // log(error_msg) no-store
-            logger->logCache(response,"not cacacheable because "+ response_cachable_msg);
+            logger->logCache(request,"not cacacheable because "+ response_cachable_msg);
             return;
         }
         cache.put(request.getCacheKey(), response);
