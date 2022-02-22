@@ -76,14 +76,14 @@ void Logger::logCache(const HttpRequestWrapper &request, std::string state)
 void Logger::logContactingServerRequest(const HttpRequestWrapper &request)
 {
     std::string idString = std::to_string(request.getUniqueId());
-    std::string logString = idString + ": Requesting" + request.getRequestLine() + " from " + request.getHost();
+    std::string logString = idString + ": Requesting " + request.getRequestLine() + " from " + request.getHost();
     log(logString);
 }
 
 void Logger::logContactingServerResponse(const HttpRequestWrapper &request, const HttpResponse &response)
 {
     std::string idString = std::to_string(request.getUniqueId());
-    std::string logString = idString + ": Received" + response.getResponseLine() + " from " + request.getHost();
+    std::string logString = idString + ": Received " + response.getResponseLine() + " from " + request.getHost();
     log(logString);
 }
 

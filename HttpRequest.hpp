@@ -78,7 +78,7 @@ public:
     METHOD getMethod() { return method; }
     std::string isCachable() const
     {
-        if (getField("no-store") != "")
+        if (getField("no-store") == "")
             return "";
         return "request specifies no-cache";
     }

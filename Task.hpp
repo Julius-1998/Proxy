@@ -28,6 +28,8 @@ public:
             in.sendResponse(response);
             BlindForwarder forwarder(std::move(in), std::move(out));
             forwarder.forward();
+            Logger* logger = Logger::getLogger();
+            logger->logCache(request, "Tunnel closed");
         }
         else if (request.getField("METHOD") == "GET")
         {
@@ -47,13 +49,6 @@ public:
             {
                 Cache.put(request, response);
             }
-            else
-            {
-                // TODO ERROR
-            }
-            printf("-----------Received Response-----------\n");
-            std::cout << response.getRawData().data() << std::endl;
-            printf("-----------End of Response-------------\n");
             in.sendResponse(response);
         }
         else if (request.getField("METHOD") == "POST")
@@ -63,9 +58,6 @@ public:
             out.sendRequest(request);
             HttpResponse response = out.recvResponse();
             logger->logContactingServerResponse(request, response);
-            printf("-----------Received Response-----------\n");
-            std::cout << response.getRawData().data() << std::endl;
-            printf("-----------End of Response-------------\n");
             in.sendResponse(response);
         }
         else

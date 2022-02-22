@@ -80,6 +80,7 @@ public:
             HttpResponse response = out.recvResponse();
             //Contacting the server to get response
             logger->logContactingServerResponse(request, response);
+            std::cout << response.getField("STATUS") << std::endl;
             if (response.getField("STATUS") == "304")
             {
                 // TODO
