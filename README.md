@@ -3,14 +3,14 @@
 TODO:
 
 
-- [ ] chunked
-- [ ] in-cache test
-- [ ] log CONNECT
-- [ ] log overwrite
-- [ ] error handling/try-catch exception
+- [X] chunked
+- [X] in-cache test
+- [X] log CONNECT
+- [X] log overwrite
+- [X] error handling/try-catch exception
 - [X] seg fault
 - [X] keep-alive(proxy-connection)
 - [X] test CONNECT
-- [ ] test POST
-- [ ] cache response errorMsg
+- [X] test POST
+- [X] cache response errorMsg
 
