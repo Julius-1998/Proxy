@@ -36,6 +36,14 @@ public:
             logger->logCache(request,"not cacacheable because "+ request_cachable_msg);
             return;
         }
+        std::string response_cachable_msg = response.isCachable();
+        if (response_cachable_msg != "")
+        {
+            // TODO:
+            // log(error_msg) no-store
+            logger->logCache(response,"not cacacheable because "+ response_cachable_msg);
+            return;
+        }
         cache.put(request.getCacheKey(), response);
         if (response.isAlwaysRevalidate())
         {
