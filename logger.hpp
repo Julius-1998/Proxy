@@ -60,6 +60,7 @@ void Logger::logRequest(HttpRequestWrapper &request, std::string IpAddress)
     time_t curr_time = time(NULL);
     char *tm = ctime(&curr_time);
     std::string time(tm);
+    time.pop_back();
     std::string idString = std::to_string(request.getUniqueId());
     std::string logString = idString + ": " + request.get()->getRequestLine() + " from " + IpAddress + " @ " + time;
     log(logString);

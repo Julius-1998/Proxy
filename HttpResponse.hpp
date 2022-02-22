@@ -115,7 +115,9 @@ public:
 
     std::string secondsToDateString(std::time_t t) const {
         auto p = std::gmtime(&t);
-        return std::asctime(p);
+        std::string s = std::asctime(p);
+        s.pop_back();
+        return s;
     }
 
     std::string getExpiringDateString() const {
