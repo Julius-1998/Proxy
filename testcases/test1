@@ -1,0 +1,11 @@
+GET http://go.com/ HTTP/1.1
+Host: go.com
+Proxy-Connection: keep-alive
+Cache-Control: max-age=0
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.9
+Cookie: s_fid=2D161724CF2A3AC2-3D229F1AB9045C1D; s_cc=true; ctoLocalVisitor={%22localVisitorId%22:%221644965447109-7862256417335%22}; s_vi=[CS]v1|310617239B487C60-60001B3B63E6A2EA[CE]; __gads=ID=9fc32c6cf0da54ce:T=1645067536:S=ALNI_MZ441vC90PICgtANIywCmVFxsmT3A; ctoVisitor={%22visitorId%22:%221644965447030-4676153387451%22%2C%22firstPageName%22:%22dfam:goc:homepage:homepage%22%2C%22firstRefUrl%22:%22na%22%2C%22firstUrl%22:%22http://go.com/%22%2C%22sessionCount%22:8}; ctoLocalSession={%22localSessionId%22:%221645546548006-167507391992%22%2C%22prevPageName%22:%22dfam:goc:homepage:homepage%22}; ctoBrowserSession=1645551707675; ctoSession={%22sessionId%22:%221645546547962-7701028427066%22%2C%22timestamp%22:1645551707676%2C%22arPageName%22:%22dfam:goc:homepage:homepage%22%2C%22firstSessionPageName%22:%22dfam:goc:homepage:homepage%22%2C%22sessionFirstRefUrl%22:%22na%22%2C%22firstSessionUrl%22:%22http://go.com/%22%2C%22hitCount%22:32}
+If-None-Match: W/"3193b7ce15f0346f2c56fd74ec3ea854"
