@@ -18,9 +18,6 @@ public:
 
     void execute()
     {
-        printf("-----------Received Request-----------\n");
-        std::cout << request.getRawData().data() << std::endl;
-        printf("-----------End of Request-------------\n");
         if (request.getField("METHOD") == "CONNECT")
         {
             HttpResponse response;
@@ -60,34 +57,9 @@ public:
             logger->logContactingServerResponse(request, response);
             in.sendResponse(response);
         }
-        else
-        {
-            // TODO
-            //  throw std::exception()
-        }
     }
 
-    /** Note: TA says keep-alive is ignored
-     *
-    void keep_alive() {
-        if (request.getField("CONNECTION") != "keep-alive" && request.getField("PROXY-CONNECTION") != "keep-alive")
-            return;
-        printf("-----------Request in Keep-Alive-----------\n");
-        request = std::move(in.recvRequest());
-        if (request.getRawData().empty())
-            return;
-        out.sendRequest(request);
-        printf("-----------Response in Keep-Alive-----------\n");
-        HttpResponse response = out.recvResponse();
-        if (response.getRawData().empty())
-            return;
-        in.sendResponse(response);
-        // TODO
-        // if request or response is empty, return
-        keep_alive();
 
-    }
-    */
 };
 
 #endif

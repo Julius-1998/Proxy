@@ -84,40 +84,6 @@ public:
     }
     virtual ~HttpRequest() {}
 };
-/*
-class GetRequest : public HttpRequest {
-public:
-    GetRequest() { setMethod(GET); }
-    virtual HttpResponse handle(const Socket& out) override {
-       // out.sendRawData(getRawData().data(), getRawData().size());
-       // return out.recvResponse();
-       return HttpResponse();
-    }
-};
-
-class PostRequest : public HttpRequest {
-public:
-    PostRequest() { setMethod(POST); }
-
-    virtual HttpResponse handle(const Socket& out) override {
-        // out.sendRawData(getRawData().data(), getRawData().size());
-        // return out.recvResponse();
-        return HttpResponse();
-    }
-};
-
-class ConnectRequest : public HttpRequest {
-public:
-    ConnectRequest() { setMethod(CONNECT); }
-    virtual HttpResponse handle(const Socket& out) override {
-        // out.sendRawData(getRawData().data(), getRawData().size());
-        //TODO
-        // Do we have to produce response ourself?
-        // return out.recvResponse();
-        return HttpResponse();
-    }
-};
-*/
 
 class HttpRequestWrapper
 {
