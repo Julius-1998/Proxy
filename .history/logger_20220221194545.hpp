@@ -15,7 +15,7 @@ private:
 protected:
     Logger()
     {
-        file_location = "/var/log/erss/proxy.log";
+        file_location = "log.txt";
         ofstream.open(file_location);
     }
     Logger(const std::string location) : file_location(location) {}

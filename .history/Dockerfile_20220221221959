@@ -1,0 +1,2 @@
+FROM gcc:latest
+RUN mkdir /var/log/erss
