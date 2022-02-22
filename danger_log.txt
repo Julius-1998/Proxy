@@ -1,0 +1,8 @@
+1. Nearly all memory is allocated on stack, leaving risks for stack smashing.
+*Solution: allocate read buffer on heap.
+
+2. When server creates listening socket, there is a chance that is may return an error, thus server and client would never build any kind of connection.
+*Solution: add error and exception handling that performs a while loop untillistening port is established
+
+3. When we start two proxy process, one of them will get a bunch of 0.0.0.0 and exhaust system resources.
+*Solution: check if it's already running and ban multiple instantiation of the proxy program
