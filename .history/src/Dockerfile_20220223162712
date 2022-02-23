@@ -1,7 +1,0 @@
-FROM gcc:latest
-
-RUN mkdir /var/log/erss
-add . /var/log/erss/
-WORKDIR /var/log/erss
-
-cmd [sudo ./run.sh]
