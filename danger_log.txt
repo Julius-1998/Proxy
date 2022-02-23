@@ -44,3 +44,5 @@ we might get a super slow performance, and have a lot of false wakeups.
 *Solution: in our design, only the resources provider will call notify_all() and the all the acquirers only call notify_one(), 
 and we unlock the scope lock explicity before we call notify instead of let the destructor of the scope lock do that
 
+12. We only specifies the max number of responses that can be cached in our proxy which is 128, in extreme cases we might use up heap memories and proxy will crash.
+*Solution: specify the max byte size and refuse to cache too large responses or set a upper limit for total size for each cache bucket
