@@ -7,4 +7,4 @@ services:
       - ./src:/var/log/erss
     ports:
       - "12345:12345"
-    command: bash -c "./run.sh"
+    # command: bash -c "./run.sh"
