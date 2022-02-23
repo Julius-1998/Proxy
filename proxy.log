@@ -1,0 +1,4 @@
+2: POST http://ocsp.sca1b.amazontrust.com/ from 10.194.88.198 @ Tue Feb 22 12:24:40 2022
+
+2: RequestingPOST http://ocsp.sca1b.amazontrust.com/ from ocsp.sca1b.amazontrust.com
+2: ReceivedHTTP/1.1 200 OK from ocsp.sca1b.amazontrust.com
