@@ -20,7 +20,6 @@ private:
             return "";
         if (cnt < 0)
             return "";
-        // TODO throw error
         return std::string(buf);
     }
 
@@ -145,7 +144,6 @@ private:
             }
             return;
         }
-        // TODO error handling
     }
     void parsePayload(HttpResponse &response)
     {
@@ -192,7 +190,6 @@ private:
             response.appendRawData(readLine());
             }
         }
-        // TODO error handling
     }
 
 public:
@@ -215,7 +212,6 @@ public:
 
     HttpRequestWrapper recvRequest()
     {
-        // TODO
         char buf1[128], buf2[1024], buf3[128];
         std::vector<char> raw_data;
         std::string next_line = readLine();
@@ -237,7 +233,6 @@ public:
 
     HttpResponse recvResponse()
     {
-        // TODO
         char buf1[128], buf2[1024], buf3[128];
         std::vector<char> raw_data;
         std::string next_line = readLine();

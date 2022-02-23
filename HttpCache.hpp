@@ -31,31 +31,22 @@ public:
         std::string request_cachable_msg = request.isCachable();
         if (request_cachable_msg != "")
         {
-            // TODO
-            // log(error_msg) no-store
             logger->logCache(request,"not cacacheable because "+ request_cachable_msg);
             return;
         }
         std::string response_cachable_msg = response.isCachable();
         if (response_cachable_msg != "")
         {
-            // TODO:
-            // log(error_msg) no-store
             logger->logCache(request,"not cacacheable because "+ response_cachable_msg);
             return;
         }
         cache.put(request.getCacheKey(), response);
         if (response.isAlwaysRevalidate())
         {
-            // TODO
-            // log in cache but need revalidate
             logger->logCache(request,"cached,but requires re-validation");
         }
         else
         {
-            // TODO
-            // log cached expires at XXX
-            // reponse.getExpiringDateString();
             logger->logCache(request, "cached, expires at " + response.getExpiringDateString());
         }
     };
@@ -82,21 +73,18 @@ public:
             logger->logContactingServerResponse(request, response);
             if (response.getField("STATUS") == "304")
             {
-                // TODO
                 logger->logCache(request, "NOTE revalidation sucess");
                 return optional_response;
             }
             else if (response.getField("STATUS") == "200")
             {
-                // TODO
                 logger->logCache(request, "NOTE revalidation sucess");
                 put(request, response);
                 return {response};
             }
             else
             {
-                // TODO
-                // ERROR
+                return {};
             }
         }
         if ((response.needsRevalidation() && !response.isRevalidatable()) || response.isExpired())
@@ -107,14 +95,12 @@ public:
             HttpResponse new_response = out.recvResponse();
             if (new_response.getField("STATUS") != "200")
             {
-                // TODO throw ERROR
+                return {};
             }
             put(request, new_response);
             return {new_response};
         }
 
-        // TODO
-        // log in cache valid
         logger->logCache(request, "in cache, valid");
         return optional_response;
     };

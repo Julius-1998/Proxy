@@ -11,9 +11,6 @@ private:
 public:
 	SocketBuilder(char* port) {
 		int fd = open_listenfd(port);
-		if (fd == -1) {
-			// TODO
-		}
 		listenfd = fd;
 	}
 
@@ -23,18 +20,12 @@ public:
 
 	Socket openTCPConnection(const std::string& host, const std::string& port) {
 		int fd = open_clientfd(const_cast<char*>(host.c_str()), const_cast<char*>(port.c_str()));
-		if (fd == -1) {
-			// TODO
-		}
 		return Socket(fd);
 	}
 	Socket acceptTCPConnection(int unique_id) {
         
 		int connfd = accept(listenfd, (SA*)&clientaddr, &clientlen);
-        fprintf(stderr, "Request from %s\n", inet_ntoa(((struct sockaddr_in *)&clientaddr)->sin_addr));
-		if (connfd == -1) {
-			// TODO
-		}
+        // fprintf(stderr, "Request from %s\n", inet_ntoa(((struct sockaddr_in *)&clientaddr)->sin_addr));
 		return Socket(connfd, unique_id);
 	}
 };

@@ -1,0 +1,2 @@
+GET www.go.com HTTP/
+Host: go.com

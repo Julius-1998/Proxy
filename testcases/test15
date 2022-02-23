@@ -1,0 +1,5 @@
+POST /post HTTP/1.1
+Host: httpbin.org
+Content-Length: 63
+
+custname=&custtel=&custemail=&topping=bacon&delivery=&comments=

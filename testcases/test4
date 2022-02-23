@@ -1,0 +1,12 @@
+GET http://www.4399.com/js/4399stat.js HTTP/1.1
+Host: www.4399.com
+Proxy-Connection: keep-alive
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36
+Accept: application/signed-exchange;v=b3;q=0.7,*/*;q=0.8
+Purpose: prefetch
+Referer: http://www.4399.com/
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.9
+Cookie: home4399=yes; Hm_lvt_334aca66d28b3b338a76075366b2b9e8=1645456973; _gprp_c=""; UM_distinctid=17f1ce11e0faa8-0bbbfb10604ae3-133f685c-13c680-17f1ce11e109ed; CNZZDATA30039538=cnzz_eid%3D1830167632-1645447948-%26ntime%3D1645546131; Hm_lpvt_334aca66d28b3b338a76075366b2b9e8=1645550293
+If-None-Match: "5f52f8b1-173"
+If-Modified-Since: Sat, 05 Sep 2020 02:32:17 GMT
