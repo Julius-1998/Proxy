@@ -7,13 +7,18 @@
 3. When we start two proxy process, one of them will get a bunch of 0.0.0.0 and exhaust system resources.
 *Solution: check if it's already running and ban multiple instantiation of the proxy program
 
-4. At first we did not handle keep-alive, after we did that, we find weird seg fault in the keep-alive function, we then found that even when client specifies keep-alive it might not keep sending requests and the server might just want to close the connection.
-*Solution: check if request is empty in keep-alive, but the TA says we do not need to handle that so we delete that and we find keep-alive sometimes is a bad practice and HTTP/2.0 has thrown that away
+4. At first we did not handle keep-alive, after we did that, we find weird seg fault in the keep-alive function, 
+we then found that even when client specifies keep-alive it might not keep sending requests and the server might just want to close the connection.
+*Solution: check if request is empty in keep-alive, but the TA says we do not need to handle that so we delete that,
+and we find keep-alive sometimes is a bad practice and HTTP/2.0 has thrown that away
 
-5. Since we want every method in Cache to be thread safe, the containsKey() and get() methods are both thread-safe. However, when we call get to try and fetch the response, we need to call containsKey() first, 
-but they share a same bucket lock, and we must realize at least the  *Repeatable Read* isolation level just as in databases. There is a chance that the cached response might be evicted between containsKey() and get() which violates *Repeatable Read*. 
+5. Since we want every method in Cache to be thread safe, the containsKey() and get() methods are both thread-safe. 
+However, when we call get to try and fetch the response, we need to call containsKey() first, 
+but they share a same bucket lock, and we must realize at least the  *Repeatable Read* isolation level just as in databases. 
+There is a chance that the cached response might be evicted between containsKey() and get() which violates *Repeatable Read*. 
 But if we hold the lock after containsKey() and release that after get() it will breaks the cache interface as containsKey() itself is thread-safe already.
-*Solution: make use of std::optional, if containsKey() returns false, then we return an empty optional, else put response in that, and the cache user explicitly checks if the returned optional has value
+*Solution: make use of std::optional, if containsKey() returns false, then we return an empty optional, else put response in that, 
+and the cache user explicitly checks if the returned optional has value
 
 6. When parsing chunked data, if we want to take a short path and directly call readLine() until we get "0\r\n" and "\r\n", we cannot guarantee we get the complete payload. 
 It's because for binary data or any other non-text data, the data might contain "\0", so readLine() is not safe, as it will terminate when encountering that. 
@@ -26,12 +31,16 @@ Also, there is a chance that the payload contain "0\r\n" or "\r\n" as raw data, 
 8. When exceptions happen in data transterring, we might miss the chance to close the socket.
 *Solution: use RAII, encapsulate file descriptor in a custom-defined Socket class and put close file in the destructor
 
-9. When we establish a connection and push the socket onto the blocking queue, we will create a copy of the Socket and thus the file descriptor might close twice or even more times in the destructor
+9. When we establish a connection and push the socket onto the blocking queue, we will create a copy of the Socket and 
+thus the file descriptor might close twice or even more times in the destructor
 *Solution: delete copy constructor and only allow move constructor, set moved Socket's file descriptor to -1 and in destructor close file descriptor only if it's not -1
 
-10. When pass request and response object between the task handlers, we might create extra copy of data and make the performance really slow especially for the payload.
+10. When pass request and response object between the task handlers, we might create extra copy of data,
+and make the performance really slow especially for the payload.
 *Solution: add move constructor and move assignment for large data structures, and if we will never use it again after passing it to the handler, only use the move constructor
 
-11. In the implementation of the blocking queue, if we wake up(call notify_all) everytime for both resource acquirers and providers, we might get a super slow performance, and have a lot of false wakeups.
-*Solution: in our design, only the resources provider will call notify_all() and the all the acquirers only call notify_one(), and we unlock the scope lock explicity before we call notify instead of let the destructor of the scope lock to that
+11. In the implementation of the blocking queue, if we wake up(call notify_all) everytime for both resource acquirers and providers,
+we might get a super slow performance, and have a lot of false wakeups.
+*Solution: in our design, only the resources provider will call notify_all() and the all the acquirers only call notify_one(), 
+and we unlock the scope lock explicity before we call notify instead of let the destructor of the scope lock to that
 
