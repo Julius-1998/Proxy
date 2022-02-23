@@ -49,6 +49,19 @@ int main(int argc, char const *argv[]) {
 		exit(EXIT_FAILURE);
 	}
 
+	//fork for the second time
+	pid = fork();
+	if (pid < 0)
+	{
+		exit(EXIT_FAILURE);
+	}
+	/* If we got a good PID, then
+	   we can exit the parent process. */
+	if (pid > 0)
+	{
+		exit(EXIT_SUCCESS);
+	}
+
 	/* Close out the standard file descriptors */
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
