@@ -42,5 +42,5 @@ and make the performance really slow especially for the payload.
 11. In the implementation of the blocking queue, if we wake up(call notify_all) everytime for both resource acquirers and providers,
 we might get a super slow performance, and have a lot of false wakeups.
 *Solution: in our design, only the resources provider will call notify_all() and the all the acquirers only call notify_one(), 
-and we unlock the scope lock explicity before we call notify instead of let the destructor of the scope lock to that
+and we unlock the scope lock explicity before we call notify instead of let the destructor of the scope lock do that
 
