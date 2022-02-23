@@ -19,7 +19,7 @@ protected:
         ofstream.open(file_location);
     }
     Logger(const std::string location) : file_location(location) {}
-    ~Logger() {}
+    ~Logger() {ofstream.close();}
     std::string file_location;
 
 public:
