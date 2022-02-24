@@ -36,7 +36,7 @@ private:
                 token.push_back(cc_fields[i++]);
             key[0] = value[0] = 0;
             sscanf(token.c_str(), "%[^=]=%s", key, value);
-            response.setField(toUpper(std::string(key)), strlen(value) ? std::string(value) : "true");
+            response.setField(std::string(key), strlen(value) ? std::string(value) : "true");
             ++i;  // pass comma
             while (i < len && std::isspace(cc_fields[i]))
                 ++i;
@@ -57,7 +57,7 @@ private:
                 token.push_back(cc_fields[i++]);
             key[0] = value[0] = 0;
             sscanf(token.c_str(), "%[^=]=%s", key, value);
-            request.setField(toUpper(std::string(key)), strlen(value) ? std::string(value) : "true");
+            request.setField(std::string(key), strlen(value) ? std::string(value) : "true");
             ++i;  // pass comma
             while (i < len && std::isspace(cc_fields[i]))
                 ++i;
