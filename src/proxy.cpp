@@ -16,69 +16,51 @@ int cnt;
 int main(int argc, char const *argv[]) {
     pid_t pid, sid;
 
-	/* Fork off the parent process */
 	pid = fork();
 	if (pid < 0)
 	{
 		exit(EXIT_FAILURE);
 	}
-	/* If we got a good PID, then
-	   we can exit the parent process. */
 	if (pid > 0)
 	{
 		exit(EXIT_SUCCESS);
 	}
 
-	/* Change the file mode mask */
 	umask(0);
 
-	/* Open any logs here */
 
-	/* Create a new SID for the child process */
 	sid = setsid();
 	if (sid < 0)
 	{
-		/* Log the failure */
 		exit(EXIT_FAILURE);
 	}
 
-	/* Change the current working directory */
 	if ((chdir("/")) < 0)
 	{
-		/* Log the failure */
 		exit(EXIT_FAILURE);
 	}
 
-	//fork for the second time
 	pid = fork();
 	if (pid < 0)
 	{
 		exit(EXIT_FAILURE);
 	}
-	/* If we got a good PID, then
-	   we can exit the parent process. */
 	if (pid > 0)
 	{
 		exit(EXIT_SUCCESS);
 	}
 
-	/* Close out the standard file descriptors */
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
 	close(STDERR_FILENO);
 
-	/* Daemon-specific initialization goes here */
 	Signal(SIGPIPE, handler);
 	ThreadPool thread_pool(32);
 	thread_pool.execute(thread_func);
 	int id_counter = 1;
-	/* The Big Loop */
 	while (1)
 	{
-		/* Do some task here ... */
 		socket_queue.push(std::move(socket_buidler.acceptTCPConnection(id_counter++))); // NOTE: move can be omited
-
-		// sleep(30); /* wait 30 seconds */
 	}
 	exit(EXIT_SUCCESS);
 }

@@ -1,26 +1,202 @@
-3: CONNECT push.services.mozilla.com:443 from 174.109.88.133 @ Wed Feb 23 23:34:28 2022
-5: CONNECT leetcode.com:443 from 174.109.88.133 @ Wed Feb 23 23:34:30 2022
-6: CONNECT extend.vimeocdn.com:443 from 174.109.88.133 @ Wed Feb 23 23:34:30 2022
-7: CONNECT assets.leetcode.com:443 from 174.109.88.133 @ Wed Feb 23 23:34:30 2022
-8: CONNECT assets.leetcode.com:443 from 174.109.88.133 @ Wed Feb 23 23:34:30 2022
-10: CONNECT assets.leetcode.com:443 from 174.109.88.133 @ Wed Feb 23 23:34:30 2022
-9: CONNECT assets.leetcode.com:443 from 174.109.88.133 @ Wed Feb 23 23:34:31 2022
-11: CONNECT assets.leetcode.com:443 from 174.109.88.133 @ Wed Feb 23 23:34:31 2022
-12: CONNECT assets.leetcode.com:443 from 174.109.88.133 @ Wed Feb 23 23:34:31 2022
-14: CONNECT www.recaptcha.net:443 from 174.109.88.133 @ Wed Feb 23 23:34:31 2022
-13: CONNECT www.recaptcha.net:443 from 174.109.88.133 @ Wed Feb 23 23:34:31 2022
-13: Tunnel closed
-14: Tunnel closed
-11: Tunnel closed
-10: Tunnel closed
+1: GET http://www.4399.com/ from 174.109.88.133 @ Thu Feb 24 00:04:32 2022
+1: not in cache
+1: Requesting GET http://www.4399.com/ from www.4399.com
+1: Received HTTP/1.1 304 Not Modified from www.4399.com
+8: CONNECT firefox.settings.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 00:04:33 2022
+2: GET http://w.cnzz.com/c.php?id=30039538 from 174.109.88.133 @ Thu Feb 24 00:04:33 2022
+9: CONNECT hm.baidu.com:443 from 174.109.88.133 @ Thu Feb 24 00:04:33 2022
+10: CONNECT bam-cell.nr-data.net:443 from 174.109.88.133 @ Thu Feb 24 00:04:33 2022
+11: CONNECT bam-cell.nr-data.net:443 from 174.109.88.133 @ Thu Feb 24 00:04:33 2022
+12: CONNECT incoming.telemetry.mozilla.org:443 from 174.109.88.133 @ Thu Feb 24 00:04:33 2022
+2: not in cache
+2: Requesting GET http://w.cnzz.com/c.php?id=30039538 from w.cnzz.com
+2: Received HTTP/1.1 304 Not Modified from w.cnzz.com
+5: GET http://c.cnzz.com/core.php?web_id=30039538&t=q from 174.109.88.133 @ Thu Feb 24 00:04:34 2022
+3: GET http://hqs10.cnzz.com/stat.htm?id=30039538&r=&lg=en-us&ntime=1645654131&cnzz_eid=1460014002-1645492131-&showp=1680x1050&p=http%3A%2F%2Fwww.4399.com%2F&t=%E5%B0%8F%E6%B8%B8%E6%88%8F%2C4399%E5%B0%8F%E6%B8%B8%E6%88%8F%2C%E5%B0%8F%E6%B8%B8%E6%88%8F%E5%A4%A7%E5%85%A8%2C%E5%8F%8C%E4%BA%BA%E5%B0%8F%E6%B8%B8%E6%88%8F%E5%A4%A7%E5%85%A8%20-%20www.4399.com&umuuid=17f1f9131211fc-065cd8a35ad7728-7f22675d-46aa00-17f1f913122470&h=1&rnd=205327822 from 174.109.88.133 @ Thu Feb 24 00:04:34 2022
+5: not in cache
+5: Requesting GET http://c.cnzz.com/core.php?web_id=30039538&t=q from c.cnzz.com
+5: Received HTTP/1.1 200 OK from c.cnzz.com
+5: cached, expires at Wed Dec 31 23:59:59 1969
+4: GET http://cnzz.mmstat.com/9.gif?abc=1&rnd=1170449215 from 174.109.88.133 @ Thu Feb 24 00:04:35 2022
+3: not in cache
+3: Requesting GET http://hqs10.cnzz.com/stat.htm?id=30039538&r=&lg=en-us&ntime=1645654131&cnzz_eid=1460014002-1645492131-&showp=1680x1050&p=http%3A%2F%2Fwww.4399.com%2F&t=%E5%B0%8F%E6%B8%B8%E6%88%8F%2C4399%E5%B0%8F%E6%B8%B8%E6%88%8F%2C%E5%B0%8F%E6%B8%B8%E6%88%8F%E5%A4%A7%E5%85%A8%2C%E5%8F%8C%E4%BA%BA%E5%B0%8F%E6%B8%B8%E6%88%8F%E5%A4%A7%E5%85%A8%20-%20www.4399.com&umuuid=17f1f9131211fc-065cd8a35ad7728-7f22675d-46aa00-17f1f913122470&h=1&rnd=205327822 from hqs10.cnzz.com
+4: not in cache
+4: Requesting GET http://cnzz.mmstat.com/9.gif?abc=1&rnd=1170449215 from cnzz.mmstat.com
+15: CONNECT hm.baidu.com:443 from 174.109.88.133 @ Thu Feb 24 00:04:35 2022
+4: Received HTTP/1.1 302 Found from cnzz.mmstat.com
+3: Received HTTP/1.1 200 OK from hqs10.cnzz.com
+3: cached, expires at Thu Jan  1 23:59:59 1970
+6: GET http://pcookie.cnzz.com/app.gif?&cna=hEybGv7cbxACAUOfXoUrrEtd from 174.109.88.133 @ Thu Feb 24 00:04:35 2022
+6: not in cache
+6: Requesting GET http://pcookie.cnzz.com/app.gif?&cna=hEybGv7cbxACAUOfXoUrrEtd from pcookie.cnzz.com
+6: Received HTTP/1.1 200 OK from pcookie.cnzz.com
+6: cached, expires at Wed Dec 31 23:59:59 1969
 9: Tunnel closed
+15: Tunnel closed
+17: GET http://www.httpwatch.com/httpgallery/chunked/chunkedimage.aspx from 174.109.88.133 @ Thu Feb 24 00:04:58 2022
+17: not in cache
+17: Requesting GET http://www.httpwatch.com/httpgallery/chunked/chunkedimage.aspx from www.httpwatch.com
+17: Received HTTP/1.1 200 OK from www.httpwatch.com
+17: cached, expires at Tue Feb 20 17:34:15 -168828771
+20: CONNECT contile.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 00:05:19 2022
+19: CONNECT spocs.getpocket.com:443 from 174.109.88.133 @ Thu Feb 24 00:05:19 2022
+18: CONNECT getpocket.cdn.mozilla.net:443 from 174.109.88.133 @ Thu Feb 24 00:05:19 2022
+21: CONNECT contile-images.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 00:05:19 2022
+22: CONNECT img-getpocket.cdn.mozilla.net:443 from 174.109.88.133 @ Thu Feb 24 00:05:19 2022
+10: Tunnel closed
 8: Tunnel closed
+11: Tunnel closed
 12: Tunnel closed
-15: CONNECT bam-cell.nr-data.net:443 from 174.109.88.133 @ Wed Feb 23 23:34:31 2022
-16: CONNECT bam-cell.nr-data.net:443 from 174.109.88.133 @ Wed Feb 23 23:34:31 2022
-18: CONNECT stats.g.doubleclick.net:443 from 174.109.88.133 @ Wed Feb 23 23:34:33 2022
-17: CONNECT www.google-analytics.com:443 from 174.109.88.133 @ Wed Feb 23 23:34:34 2022
-21: CONNECT www.recaptcha.net:443 from 174.109.88.133 @ Wed Feb 23 23:34:34 2022
-23: CONNECT www.gstatic.com:443 from 174.109.88.133 @ Wed Feb 23 23:34:35 2022
+18: Tunnel closed
+21: Tunnel closed
+20: Tunnel closed
+19: Tunnel closed
+22: Tunnel closed
+23: CONNECT push.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 00:14:49 2022
+24: CONNECT firefox.settings.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 00:14:50 2022
+24: Tunnel closed
+25: CONNECT safebrowsing.googleapis.com:443 from 174.109.88.133 @ Thu Feb 24 00:20:07 2022
+25: Tunnel closed
+26: CONNECT contile.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 00:20:19 2022
+26: Tunnel closed
 23: Tunnel closed
-27: CONNECT api.growingio.com:443 from 174.109.88.133 @ Wed Feb 23 23:34:36 2022
+27: CONNECT push.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 00:36:09 2022
+29: CONNECT spocs.getpocket.com:443 from 174.109.88.133 @ Thu Feb 24 00:38:20 2022
+30: CONNECT contile.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 00:38:20 2022
+31: CONNECT img-getpocket.cdn.mozilla.net:443 from 174.109.88.133 @ Thu Feb 24 00:38:20 2022
+29: Tunnel closed
+30: Tunnel closed
+31: Tunnel closed
+32: CONNECT contile.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 00:53:20 2022
+32: Tunnel closed
+34: CONNECT safebrowsing.googleapis.com:443 from 174.109.88.133 @ Thu Feb 24 00:58:00 2022
+34: Tunnel closed
+35: CONNECT contile.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 01:08:20 2022
+36: CONNECT incoming.telemetry.mozilla.org:443 from 174.109.88.133 @ Thu Feb 24 01:09:17 2022
+35: Tunnel closed
+36: Tunnel closed
+38: CONNECT spocs.getpocket.com:443 from 174.109.88.133 @ Thu Feb 24 01:13:20 2022
+37: CONNECT getpocket.cdn.mozilla.net:443 from 174.109.88.133 @ Thu Feb 24 01:13:20 2022
+39: CONNECT img-getpocket.cdn.mozilla.net:443 from 174.109.88.133 @ Thu Feb 24 01:13:21 2022
+38: Tunnel closed
+37: Tunnel closed
+39: Tunnel closed
+40: CONNECT contile.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 01:23:20 2022
+40: Tunnel closed
+41: CONNECT safebrowsing.googleapis.com:443 from 174.109.88.133 @ Thu Feb 24 01:28:07 2022
+41: Tunnel closed
+42: CONNECT contile.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 01:38:20 2022
+42: Tunnel closed
+43: CONNECT spocs.getpocket.com:443 from 174.109.88.133 @ Thu Feb 24 01:48:20 2022
+45: CONNECT img-getpocket.cdn.mozilla.net:443 from 174.109.88.133 @ Thu Feb 24 01:48:21 2022
+43: Tunnel closed
+45: Tunnel closed
+46: CONNECT contile.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 01:53:20 2022
+47: CONNECT firefox.settings.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 01:54:32 2022
+46: Tunnel closed
+47: Tunnel closed
+48: CONNECT services.addons.mozilla.org:443 from 174.109.88.133 @ Thu Feb 24 01:56:32 2022
+49: CONNECT aus5.mozilla.org:443 from 174.109.88.133 @ Thu Feb 24 01:56:33 2022
+50: CONNECT safebrowsing.googleapis.com:443 from 174.109.88.133 @ Thu Feb 24 01:58:02 2022
+50: Tunnel closed
+48: Tunnel closed
+49: Tunnel closed
+51: CONNECT firefox.settings.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 02:01:12 2022
+51: Tunnel closed
+27: Tunnel closed
+52: CONNECT getpocket.cdn.mozilla.net:443 from 174.109.88.133 @ Thu Feb 24 02:36:34 2022
+53: CONNECT contile.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 02:36:34 2022
+54: CONNECT spocs.getpocket.com:443 from 174.109.88.133 @ Thu Feb 24 02:36:34 2022
+55: CONNECT img-getpocket.cdn.mozilla.net:443 from 174.109.88.133 @ Thu Feb 24 02:36:34 2022
+52: Tunnel closed
+54: Tunnel closed
+53: Tunnel closed
+55: Tunnel closed
+56: CONNECT contile.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 02:55:13 2022
+56: Tunnel closed
+57: CONNECT safebrowsing.googleapis.com:443 from 174.109.88.133 @ Thu Feb 24 03:04:48 2022
+57: Tunnel closed
+58: CONNECT push.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 03:08:21 2022
+60: CONNECT firefox.settings.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 03:08:21 2022
+61: CONNECT content-signature-2.cdn.mozilla.net:443 from 174.109.88.133 @ Thu Feb 24 03:08:22 2022
+61: Tunnel closed
+60: Tunnel closed
+62: CONNECT contile.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 03:10:13 2022
+63: CONNECT spocs.getpocket.com:443 from 174.109.88.133 @ Thu Feb 24 03:10:13 2022
+65: CONNECT img-getpocket.cdn.mozilla.net:443 from 174.109.88.133 @ Thu Feb 24 03:10:14 2022
+62: Tunnel closed
+63: Tunnel closed
+65: Tunnel closed
+66: CONNECT contile.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 03:25:13 2022
+66: Tunnel closed
+58: Tunnel closed
+67: CONNECT safebrowsing.googleapis.com:443 from 174.109.88.133 @ Thu Feb 24 03:34:48 2022
+67: Tunnel closed
+68: CONNECT push.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 03:38:36 2022
+69: CONNECT firefox.settings.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 03:38:37 2022
+70: CONNECT contile.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 03:40:13 2022
+69: Tunnel closed
+71: CONNECT spocs.getpocket.com:443 from 174.109.88.133 @ Thu Feb 24 03:45:13 2022
+72: CONNECT getpocket.cdn.mozilla.net:443 from 174.109.88.133 @ Thu Feb 24 03:45:13 2022
+73: CONNECT img-getpocket.cdn.mozilla.net:443 from 174.109.88.133 @ Thu Feb 24 03:45:13 2022
+74: CONNECT normandy.cdn.mozilla.net:443 from 174.109.88.133 @ Thu Feb 24 03:45:32 2022
+75: CONNECT classify-client.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 03:45:33 2022
+76: CONNECT content-signature-2.cdn.mozilla.net:443 from 174.109.88.133 @ Thu Feb 24 03:45:33 2022
+74: Tunnel closed
+71: Tunnel closed
+72: Tunnel closed
+73: Tunnel closed
+75: Tunnel closed
+76: Tunnel closed
+77: CONNECT contile.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 03:55:13 2022
+77: Tunnel closed
+68: Tunnel closed
+70: Tunnel closed
+78: CONNECT safebrowsing.googleapis.com:443 from 174.109.88.133 @ Thu Feb 24 04:04:50 2022
+78: Tunnel closed
+79: CONNECT push.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 04:09:01 2022
+80: CONNECT firefox.settings.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 04:09:02 2022
+81: CONNECT contile.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 04:10:13 2022
+80: Tunnel closed
+81: Tunnel closed
+82: CONNECT spocs.getpocket.com:443 from 174.109.88.133 @ Thu Feb 24 04:21:58 2022
+84: CONNECT img-getpocket.cdn.mozilla.net:443 from 174.109.88.133 @ Thu Feb 24 04:21:59 2022
+85: CONNECT safebrowsing.googleapis.com:443 from 174.109.88.133 @ Thu Feb 24 04:21:59 2022
+85: Tunnel closed
+82: Tunnel closed
+84: Tunnel closed
+86: CONNECT contile.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 04:26:58 2022
+86: Tunnel closed
+79: Tunnel closed
+87: CONNECT safebrowsing.googleapis.com:443 from 174.109.88.133 @ Thu Feb 24 04:41:22 2022
+87: Tunnel closed
+88: CONNECT contile.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 04:41:58 2022
+88: Tunnel closed
+89: CONNECT push.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 04:46:03 2022
+91: CONNECT shavar.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 04:52:03 2022
+91: Tunnel closed
+92: CONNECT contile.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 04:56:58 2022
+93: CONNECT spocs.getpocket.com:443 from 174.109.88.133 @ Thu Feb 24 04:56:58 2022
+94: CONNECT getpocket.cdn.mozilla.net:443 from 174.109.88.133 @ Thu Feb 24 04:56:58 2022
+95: CONNECT img-getpocket.cdn.mozilla.net:443 from 174.109.88.133 @ Thu Feb 24 04:56:59 2022
+93: Tunnel closed
+92: Tunnel closed
+94: Tunnel closed
+95: Tunnel closed
+96: CONNECT safebrowsing.googleapis.com:443 from 174.109.88.133 @ Thu Feb 24 05:11:02 2022
+96: Tunnel closed
+97: CONNECT contile.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 05:11:58 2022
+97: Tunnel closed
+98: CONNECT contile.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 05:26:58 2022
+98: Tunnel closed
+99: CONNECT spocs.getpocket.com:443 from 174.109.88.133 @ Thu Feb 24 05:31:58 2022
+101: CONNECT img-getpocket.cdn.mozilla.net:443 from 174.109.88.133 @ Thu Feb 24 05:32:01 2022
+99: Tunnel closed
+102: CONNECT safebrowsing.googleapis.com:443 from 174.109.88.133 @ Thu Feb 24 05:41:29 2022
+102: Tunnel closed
+103: CONNECT contile.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 05:41:58 2022
+103: Tunnel closed
+104: CONNECT push.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 05:46:28 2022
+105: CONNECT firefox.settings.services.mozilla.com:443 from 174.109.88.133 @ Thu Feb 24 05:46:28 2022
+105: Tunnel closed
+89: Tunnel closed
