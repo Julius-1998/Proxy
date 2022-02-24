@@ -125,7 +125,7 @@ public:
         if (getField("s-maxage") != "") {
             s = s + std::stoi(getField("s-maxage")) + std::stoi(getField("max-stale") + "0") / 10 - std::stoi(getField("min-fresh") + "0") / 10;
         } else if (getField("max-age") != "") {
-            s = s + std::stoi(getField("s-maxage")) + std::stoi(getField("max-stale") + "0") / 10 - std::stoi(getField("min-fresh") + "0") / 10;
+            s = s + std::stoi(getField("max-age")) + std::stoi(getField("max-stale") + "0") / 10 - std::stoi(getField("min-fresh") + "0") / 10;
         } else if (getField("EXPIRES") != "") {
             s = dateStringToSeconds(getField("EXPIRES"));
         } else {

@@ -1,9 +1,10 @@
-FROM gcc:latest
-
+FROM ubuntu:20.04
+RUN apt-get update
+RUN apt-get install -y gcc g++ make
 RUN mkdir /var/log/erss
 RUN touch /var/log/erss/proxy.log
-add . /var/log/erss
-WORKDIR /var/log/erss
-RUN chmod o+x run.sh
+RUN mkdir /code
+WORKDIR /code
+ADD . /code/
+RUN chmod +x run.sh
 
-# ENTRYPOINT ["./run.sh"]
